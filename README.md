@@ -265,6 +265,20 @@ int main()
 
 ## step01-0_考前復習、考後講解出錯的地方---九九乘法表
 
+```cpp
+#include <stdio.h>
+int main()
+{
+	for(int i=1; i<=9; i++){
+		for(int j=1; j<=9; j++){
+			printf("%d*%d=%2d ", j, i, i*j);
+		}
+		printf("\n");
+		
+	}
+
+}
+```
 ## step01-1_畫星星_利用2層迴圈, 先利用左手i印出鷹架, 想辦法推出要有幾個星星, 再利用右手j迴圈來印出星星
 
 ```cpp
@@ -351,3 +365,28 @@ int main()
 }
 ```
 
+## step03-1再次講解「輾轉相除法」裡面的 while(1) 的意思, 使用 if(1)為例講解, 其中0不成立,其他都成立。還有講解無窮迴圈 infinite loop 的意思, 並介紹Apple總部的大樓像個Loop迴圈。還有 break 的意思
+
+## step03-2_介紹下週考試題目,畫出大小為N的金字塔
+```cpp
+#include <stdio.h>
+int main()
+{
+	int n;
+	scanf("%d", &n);
+	
+	for(int i=1; i<=n; i++){//人類進階型
+		//6 vs. 1
+		//7 vs. 0
+		int space = n-i;
+		int star = 2*i-1;
+		for(int k=0; k<space; k++) printf(" ");
+		for(int k=0; k<star; k++) printf("*");
+		printf("\n");
+		//printf("i:%d space:%d star:%d\n", 
+		//		i,   space,   star);
+	}
+
+}
+```
+## step03-3_介紹怎麼利用 Markdown 語法, 像是# 表示大標題, ```cpp 表示程式碼等, 讓大家去修改 GitHub 程式倉庫裡面的 README.md 說明檔
