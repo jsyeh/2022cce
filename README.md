@@ -11,6 +11,12 @@
   - 3.3. 在右邊寫程式
   - 3.4. Build and Run 
 
+## step01-1_介紹上課教什麼What,Why,How
+
+## step01-2_介紹上課評分方式Moodle作業、瘋狂程設考試、實習課成績
+
+## step01-3_利用CodeBlocks寫第一個程式Hello World
+
 ```c
 #include <stdio.h>
 
@@ -19,6 +25,29 @@ int main()
 	printf("Hello World\n");
 }
 ```
+
+## step02-1_如何利用PrintScreen或Win-Shift-S組合鍵來截圖上傳Moodle課堂作業
+
+## step02-2_如何上傳Moodle課堂作業
+
+## step02-3_解釋Hello World 程式的意思,並稍加修改
+
+```cpp
+#include <stdio.h>
+
+int main()
+{
+   printf("Hello World\n");
+   printf("Hello World\n");
+   printf("我是友銓同學\n");
+   ///有時候中文會有問題,你可用英文
+   //註解 comments 是給人看的 作業2加註解
+   ///CodeBlocks如果畫3條,會比較深
+}
+```
+
+## step03-1_解釋「許功蓋」的中文問題, 之後帶大家建立GitHub帳號、建立GitHub的專案、上傳今天的程式
+
 
 TODO: 你要上傳截圖(程式、小黑)
 
@@ -39,6 +68,8 @@ TODO: 你要上傳截圖(程式、小黑)
 2. 取名 你的帳號 / 2022cce (倉庫名
 3. Add a README file, Create repo 你會有個網址 github.com/你的帳號/2022cce
 4. 把你今天寫的2個程式, Add - upload files上傳, 綠色Commit 截圖上傳
+
+## step03-2_如果專案倉庫開錯(ex. 漏勾README.md) 可以刪掉重來即可
 
 
 # Week02
@@ -75,10 +106,6 @@ int main()
 }
 ```
 
-## step03_3_介紹下週考試的簡單版本
-
-## step03_4_介紹如何將.cpp程式上傳到GitHub, 配合commit message
-
 ## step03-1_介紹變數、int整數變數、改變值、印出來
 
 ```cpp
@@ -114,6 +141,7 @@ int main() ///OK
 }
 ```
 
+## step03_3_介紹下週考試的簡單版本
 考試的版本比較簡單
 
 ```cpp
@@ -125,6 +153,10 @@ int main()
 	printf("%d", a+b );
 }
 ```
+
+## step03_4_介紹如何將.cpp程式上傳到GitHub, 配合commit message
+
+
 
 # Week03
 
@@ -255,6 +287,234 @@ int main()
 ```
 
 ## step03-3_再次示範如何將今天的程式上傳到GitHub
+
+# Week04
+
+## step01-0_考試前複習(奇偶數)
+
+## step01-0b_考試後講解同學出錯的地方
+
+## step01-1_老師花了點時間介紹閏年, 也就是一年365天是不夠的, 4年會多1天 ,要閏年(2月29天), 但根據天文學觀測, 其實地球繞太陽一圈是 365.24219...天, 因此, 閏年有 4, 100, 400 這幾個神奇的數字。老師教了一種簡單記憶的程式寫法, 是先搞定稀有的400, else再考慮100, else 再考慮4, else... 
+
+```cpp
+#include <stdio.h>
+///閏年 奧運 4年一次
+///如果:地球繞太陽公轉一圈365.25天
+/// 365 365 365 365+1  2月29天!
+///但是 365.24219 所以,太多要再扣回來
+///每100年要跳開  每400年要再補回
+
+///口訣: 4 100 400(稀有) 倒過來想
+int main()
+{
+    printf("請輸入西元年分: ");
+
+    int n;
+    scanf("%d", &n);
+
+    if( n%400==0 ) printf("閏年");///最稀有
+    else if( n%100==0 ) printf("普通年/平年");
+    else if( n%4==0 ) printf("閏年");
+    else printf("普通年/平年");
+}
+```
+
+## step02-1_介紹CodeBlocks的自動排版,老師介紹程式碼的排版法, 有預設的 Allmen (ANSI), K&R, Stroustrup 等方法, 請用上週的 week03-5.cpp 程式拿來排版看看(存成 week04-2.cpp), 在 CodeBlocks 裡, 按右鍵可 Format AStyle自動排版, 可在 Setting-Editor-Source Formatter調整看看
+
+```cpp
+///把上週的 week03-5.cpp 剪貼下來, 我們要練習排版 CodeBlocks 右鍵, Format AStyle
+///很有多種排版法, 今天week04-2都試試看
+///Setting-Editor, 左邊第7個 Source Formatter
+/// Allmen (ANSI) 預設的排版法, 大括號在下面,清楚
+/// K&R (C的發明者,寫的書,Hello World出處) 大括號在右邊, 省下很多行
+/// Stroustrup 是 C++ 的爸爸 (發明者)
+/// Linux 的, 空格是8格
+///week03-5.cpp 想要把 week03-2的數學,自動算
+#include <stdio.h>
+int main()
+{
+    ///  K&R The C Programming Lanaguage 的作者(Hello World出處)
+    for( int n=1; n<2000; n++ ) ;
+
+
+    {
+        if( n%8==6 && n%9==7 && n%15==13) {
+
+            printf("\n現在n: %d\n", n );
+            printf("用8除餘%d\n", n%8 );
+            printf("用9除餘%d\n", n%9 );
+            printf("用15除餘%d\n", n%15 );
+        }
+
+        if( n==0 )
+            printf("hello");
+    }
+}
+```
+
+## step02-2_講解完台大資訊工程系pangfeng劉邦鋒老師的線上課程YouTube連結, 其中作業2也會用到閏年的判斷, 所以下週考試是簡單版的閏年判斷。請在瘋狂程設-第05週, 練習模式, 修改寫出的程式(印出 Yes 或 No)
+
+```cpp
+#include <stdio.h>
+int main()
+{
+    int n;
+    scanf("%d", &n);
+
+    if(n%400==0) printf("Yes");
+    else if(n%100==0) printf("No");
+    else if(n%4==0) printf("Yes");
+    else printf("No");
+}
+```
+
+## step03-1_介紹課本的流程控制 if(判斷) 及 for(迴圈), 接下來練習寫從0開始的迴圈, 觀察它跑幾次
+
+```cpp
+///Week04-4
+///Step03-1 練習 for(迴圈)
+#include <stdio.h>
+int main()
+{
+    for( int i=0; i<4; i++){
+        printf("出現 i:%d \n", i);
+    } ///會印出 i:0 ... i:3 共4次
+}   /// 0 1 2 3 4 5 6 ... 99 (100個)
+    /// 0 1 2 (3個)
+    /// 0 1 2 3 4 5 (6個)
+```
+
+## step03-2_介紹電腦習慣的迴圈(從0開始)與人類習慣的迴圈(從1開始), 並理解它們如何跑一樣多次。
+
+```cpp
+///Week04-5
+///Step03-2 練習 for(迴圈),看次數
+#include <stdio.h>
+int main()
+{
+    int N=7;
+    for( int i=0; i<N; i++){
+        printf("出現 i:%d \n", i);
+    }
+    ///程式的重點,是N是多少,就幾次
+    for( int i=1; i<=N; i++){
+        printf("接下來 i:%d \n", i);
+    }
+}
+```
+
+## step03-3_下課前複習今天上課的內容, 並將程式上傳到GitHub
+
+## step3-4_下課後, 有同學來問為什麼不建議加 system("pause")
+用以下的程式來解釋 system() 可以直接呼叫系統的指令, 這不是個好習慣。舉例如下
+
+```cpp
+#include <stdlib.h>
+#define A system
+int main()
+{
+    A("dir");
+    A("del week04-9.cpp");
+    A("dir");
+}
+```
+
+# Week05
+
+## step01-0_考試前講解閏年的2種寫法, 一種簡單, 一種少行但難理解
+
+## step01-0b_考試後講解同學考試出錯的地方
+
+## step01-1_講解 if(判斷) 及 for(迴圈) 的差別
+
+```cpp
+///了解 if 和 while 的差別
+#include <stdio.h>
+int main()
+{
+    int a=10;
+    ///本來是if(判斷) 印一次
+    if( a>0 ) printf("a是%d a>0\n", a);
+
+    ///現在改成while(迴圈)
+    while( a>0 ) printf("a是%i a>0\n", a);
+    ///不會停
+}
+```
+
+## step01-2_把while(迴圈)修改後, 利用流程圖的方形、菱型、箭頭,來了解程式的流程
+
+```cpp
+///while的進階用法,可以跑3次
+#include <stdio.h>
+int main()
+{
+    int a=3;
+    while( a>0 ){
+        printf("a是%d, a>0\n", a);
+
+        a--; ///課本第2章,運算
+    }
+}
+```
+
+## step02-1_利用for(迴圈,把剛剛的while(迴圈)很多行的開頭的值、中間的判斷、收尾的修改, 變成 for(迴圈)的三個欄位
+
+```cpp
+///分析 while vs. for
+#include <stdio.h>
+int main()
+{
+    ///int a=3;
+    ///while( a>0 ){
+    ///    printf("a是%d, a>0\n", a);
+    ///    a--; ///課本第2章,運算
+    ///}
+    for( int a=3; a>0; a-- ){
+        printf("a是%d, a>0\n", a);
+    }
+}
+```
+
+## step02-2_介紹迴圈的基礎型、進階型、倒過來型
+```cpp
+///了解 for迴圈的各種變型
+#include <stdio.h>
+int main()
+{
+    for( int i=0; i<3; i++ ){ /// 0 1 2
+        printf("迴圈(電腦習慣) i是%d\n", i);
+    }
+    for( int i=1; i<=3; i++){ /// 1 2 3
+        printf("迴圈(人類熟悉) i是%d\n", i);
+    }
+    for( int a=3; a>0; a-- ){
+        printf("倒過來的迴圈 a是%d\n", a);
+    }
+}
+```
+
+## step03-1_利用2層迴圈,寫出「九九乘法表」
+
+```cpp
+///2層迴圈, 九九乘法表
+#include <stdio.h>
+int main()
+{
+    for( int i=1; i<10; i++)
+    { ///10次: 0...9
+        for(int j=1; j<10; j++)
+        {
+            printf("%d*%d=%2d ", i, j, i*j );
+        }
+
+        printf("\n");
+    }
+}
+```
+
+## step03-2_講解 printf() %2d 的格式意思, 並講解上週作業同學在排版遇到的問題
+
 
 
 # Week06
