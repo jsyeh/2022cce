@@ -650,3 +650,204 @@ int main()
 }
 ```
 ## step03-3_介紹怎麼利用 Markdown 語法, 像是# 表示大標題, ```cpp 表示程式碼等, 讓大家去修改 GitHub 程式倉庫裡面的 README.md 說明檔
+
+
+# Week07
+
+## step01-0_考前復習(畫星星、金字塔), 並解釋考前練習的重要性。考後講解出錯的地方.zip
+
+## step01-1_介紹 long long int 很長很長的整數 vs. int 整數 的差別, 並用程式示範太長的數字在int會出錯
+
+```cpp
+///long long int?
+///很長 很長 的整數
+#include <stdio.h>
+int main()
+{///在x86的電腦架構下 int 是32位元 可裝 9-10位
+    int n=9876543210;
+    printf("int 印出來 %d\n", n);///但是印錯了
+
+    ///64位元, 可裝 18-19位數
+    long long int a=9876543210;///10位數
+    printf("long long int 印出來 %lld\n", a);
+}                       ///英文的 long long d
+///1999年
+///Intel說 IA64 vs. 32 不相容
+///AMD說 AMD64 vs 32 要相容
+///Intel哭哭,認錯 Intel x64 和 amd64一樣
+///所以 C 的 int 在 電腦裡為了與 x86相容
+///所以是 32位元
+///計概教 0/1 位元,  32位元   2^32 最大是多少? 2,147,483,647
+///口訣: 2,000,000,000 後面9個0,合起來10位數, 沒事
+///在寫程式時,明明電腦就很強,但為了相容, int 裝笨
+///要真的有64位元的功能, 要改用 long long int 很長很長的整數
+```
+
+## step02-0_解釋為什麼會有 long long int, 為什麼 int 是 32位元, 為什麼 long long int 是 64位元
+
+```cpp
+///1999年
+///Intel說 IA64 vs. 32 不相容
+///AMD說 AMD64 vs 32 要相容
+///Intel哭哭,認錯 Intel x64 和 amd64一樣
+///所以 C 的 int 在 電腦裡為了與 x86相容
+///所以是 32位元
+///計概教 0/1 位元,  32位元   2^32 最大是多少? 2,147,483,647
+///口訣: 2,000,000,000 後面9個0,合起來10位數, 沒事
+///在寫程式時,明明電腦就很強,但為了相容, int 裝笨
+///要真的有64位元的功能, 要改用 long long int 很長很長的整數
+```
+
+## step02-1_利用 long long int 來改寫上週的最大公因數-暴力迴圈法
+
+```cpp
+///最大公因數,改用 long long int
+/// scanf("%lld", &a); 讀入
+///printf("%lld", a); 印出
+#include <stdio.h>
+int main()
+{
+    long long int a, b; ///都是很長的整數
+    scanf("%lld %lld", &a, &b );///小心,是小寫的字母LLD
+
+    long long int ans;
+    for( long long int i = 1; i<=a; i++){
+        if( a%i==0 && b%i==0 ) ans = i;
+    }
+    printf("最大公因數是:%lld\n", ans);
+}
+```
+
+## step02-2_利用 long long int 很長很長的整數的版本,將最大公因數用輾轉相除法算出來。要小心 %lld 不是 %11d
+
+```cpp
+///改用輾轉相除法,找最大公因數
+///要用 long long int 版本,數字很大
+#include <stdio.h>
+int main()
+{
+    long long int a, b, c;///老大,老二, 老三
+    scanf("%lld %lld", &a, &b);
+    while(1){ ///迴圈一直做
+        c = a % b; ///老大、老二,算出老三(餘數)
+        printf("a:%lld b:%lld c:%lld\n", a, b, c);
+        if( c==0 ) break;
+        a = b;
+        b = c;
+    }
+    printf("答案是: %lld\n", b );
+}
+```
+
+
+## step03-1_利用剝皮法,把數字的每一個位數慢慢剝下來。先用暴力、重覆的程式碼來做。之後可用迴圈來改寫
+
+
+```cpp
+///解決 人類易解理的正常數字10進位 vs. 2進位
+///ex. 先看簡單的版本 1230元=1000元+100元*2+10元*3
+#include <stdio.h>
+int main()
+{
+    ///請輸入9位數
+    int n;
+    scanf("%d", &n);
+
+    printf("千元的:%d\n", n/1000 ); ///整數 除 整數 得到整數
+    n = n%1000;
+
+    printf("百元的:%d\n", n/100 );
+    n = n%100;
+
+    printf("十元的:%d\n", n/10 );
+    n = n%10;
+
+    printf("一元的:%d\n", n );
+}
+```
+
+```cpp
+///倒過來想
+#include <stdio.h>
+int main()
+{
+    ///請輸入9位數
+    int n;
+    scanf("%d", &n);
+
+    printf("現在的個位數:%d\n", n%10);
+    n = n / 10;
+
+    printf("現在的個位數:%d\n", n%10);
+    n = n / 10;
+
+    printf("現在的個位數:%d\n", n%10);
+    n = n / 10;
+
+    printf("現在的個位數:%d\n", n%10);
+    n = n / 10;
+
+    printf("現在的個位數:%d\n", n%10);
+    n = n / 10;
+
+    printf("現在的個位數:%d\n", n%10);
+    n = n / 10;
+
+    printf("現在的個位數:%d\n", n%10);
+    n = n / 10;
+
+    printf("現在的個位數:%d\n", n%10);
+    n = n / 10;
+
+    printf("現在的個位數:%d\n", n%10);
+    n = n / 10;
+
+    printf("現在的個位數:%d\n", n%10);
+    n = n / 10;
+}
+```
+
+```cpp
+///倒過來想
+#include <stdio.h>
+int main()
+{
+    ///請輸入9位數
+    int n;
+    scanf("%d", &n);
+    while( n > 0 ){
+        printf("現在的個位數:%d\n", n%10);
+        n = n / 10;
+    }
+}
+```
+
+```cpp
+///倒過來想
+#include <stdio.h>
+int main()
+{
+    ///請輸入9位數
+    int n;
+    scanf("%d", &n);
+    while( n > 0 ){
+        printf("%d\n", n%2);
+        n = n / 2;
+    }
+}
+```
+
+## step03-2_利用 GitHub Pages 製作自己的網站, 有自己專屬的網址, 可以上傳圖片, 也能編修你的網站。甚至可以用 HTML CSS JavaScript 編輯你的互動性網站
+
+1. 登入 GitHub 帳號
+2. Add repository 加(新的)程式倉庫 
+	1. 把倉庫名取成 你的帳號.github.io
+	2. 要加你的簡介 (你的網址、網站)
+	3. 要勾 Public
+	4. 要勾 README
+3. 在新的網站的 README.md 裡, 可以放入圖片
+	- 只要按右邊的筆,便可以修改 README.md檔
+4. 最後 commit
+
+MrSeanIsGod.github.io
+
