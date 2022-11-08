@@ -937,3 +937,125 @@ int main()
     printf("總合是:%d", sum);///迴圈後面,把sum拿來用
 }
 ```
+
+
+# Week10
+
+## step01-1_考前復習「列出質數」的程式, 並講解容易出錯的地方
+
+```cpp
+//Step01: 大迴圈,試很多個n
+//Step02: 小迴圈,測試n是不是質數
+
+#include <stdio.h>
+int main()
+{
+	int a;
+	scanf("%d", &a);//改一下變數, 叫a
+	
+	for(int n=2; n<=a; n++){//Step01
+	
+		//測試n是不是質數
+		int bad=0;//一開始不知道有沒有壞
+		
+		for(int i=2; i<n; i++){
+			if( n%i==0) bad=1;
+		}
+		if( bad==0 ) printf("%d ", n);
+	}
+} 
+```
+
+## step01-2_今天要教新的進度-「陣列」,就像之前 int a; 可以宣告一個整數, int a[4] 可以一次準備4個整數。陣列的宣告就是用方括號講有幾格。之前宣告給值是 int a=10; 現在改成 int a[4] = {10, 20, 30, 40}; 來一次把4個值都放進去4個格子。最後, 用電腦的 for迴圈, 把值印出來。
+
+```cpp
+#include <stdio.h>
+int main()
+{
+    int a[4] = { 10, 20, 30, 40};
+    ///int a[4]; ///沒有給值,就是亂亂的值(之前殘留的)
+    for(int i=0; i<4; i++){
+        printf("a[%d] = %d \n", i, a[i] );
+    }
+}
+```
+
+## step02-1_剛剛陣列+for迴圈很棒, 但是想要真的理解每一個, 我們使用 a[0] 來取出最前面的那一個整數變數。如果沒有初始化給值, 裡面會先是亂碼。但是 a[0] = 33; 給值後, 之後 a[0] 就會是 33。
+
+```cpp
+#include <stdio.h>
+int main()
+{
+    int a[4]; ///宣告有4格 a[0] a[1] a[2] a[3]
+    printf("a[0]: %d\n", a[0] ); ///把 a[0]拿來用,亂碼
+
+    a[0] = 33; ///在最前面那個放33
+    printf("a[0]: %d\n", a[0] ); ///把 a[0]拿來用
+}
+```
+
+## step02-2_接下來照著課本, 來熟悉陣列 正著印、倒著印, for迴圈的寫法會反過來。如果對迴圈不熟的話, 這裡很容易出錯。
+
+```cpp
+#include <stdio.h> ///倒過來印你的陣列
+int main()
+{
+    int a[4] = { 10, 20, 30, 40 };
+
+    for(int i=0; i<4; i++){
+        printf("%d ", a[i] );
+    }
+    printf("\n上面正的印, 下面倒著印\n");
+    for(int i=3; i>=0; i--){
+        printf("%d ", a[i] );
+    }
+}
+```
+
+## step03-1_講解百數反印
+
+```cpp
+#include <stdio.h>
+int main()
+{
+	int a[100];
+
+	for(int i=0; i<100; i++){ //i: 0...99
+		scanf("%d", &a[i] );
+	}
+
+	for(int i=99; i>=0; i--){ //i: 99...0
+		printf("%d\n", a[i] );
+	}
+
+}
+```
+
+## step03-2_介紹Git指令
+
+簡單的 Git指令教學
+
+1. 安裝 Git 軟體 (Moodle上課用軟體、桌面 葉正聖老師上課軟體 都有它)
+2. 啟動 Git Bash (小黑) 
+    - 可用 Linux指令
+    - 2.1. ls 列出你的目錄檔案(list)
+    - 2.2. cd 改變你的目錄(change directory)
+    - 像是 cd desktop 會進到電腦的桌面
+    - 也可以用 Windows指令
+    - 2.3. start . 開啟現在的目錄(小數點)
+    - 也可以用 Git指令
+3. git clone https://github.com/你的帳號/2022cce 從雲端複製下來你的硬碟
+4. 在檔案總管裡, 把你今天的程式 copy 進去
+5. 在 Git Bash 裡, 繼續下指令
+    - 5.1. cd 2022cce 進入你的程式倉庫目錄
+    - 5.2. git status 可查看你硬碟的狀況(有3個紅色新檔)
+    - 5.3. git add . 可以把紅色新檔, 加入倉庫帳冊(靜靜成功了
+    - 5.4. git status 再查一次(變成綠色)
+6. 在 Git Bash 裡, commit 確認你的修改
+    - 要先把你的名字及 email 輸入設定
+    - 6.0. git config --global user.email jsyeh@mail.mcu.edu.tw
+    - 6.0. git config --global user.name jsyeh
+    - 6.1. git commit -m "修改目錄"
+7. 推送上雲端
+    - 7.1. 先用 Chrome 登入 GitHub
+    - 7.2. git push 推送上雲端 (會跳出一個視窗確認你有登入嗎?)
