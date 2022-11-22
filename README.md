@@ -1095,3 +1095,38 @@ int main()
 - (git config --global user.name jsyeh)
 - 10. git commit -m "week11" (小黑: 把今天的修改, 確認,並加week11的訊息)
 - 11. git push (小黑: 會跳出 Chrome 的 Browser 選確認你的帳號密碼)
+
+
+# Week12
+
+## step01-1_剛剛考完泡泡排序法Bubble Sort, 今天再練習老師很喜歡的Selection Sort 選擇排序法, 口訣是左手i, 右手j, 左右比大小, 不對就交換。迴圈的寫法相對簡單, 只要考量 for(int j=i+1 的這個地方即可
+
+## step02-1_先請同學們複習int a; int b=10; int c[10]; int d[10]={...};複習完陣列宣告,接下來想讓大家熟悉二維陣列, 所以模仿剛剛的方式, 宣告二維陣列, 並給它初始值。請用 CodeBlocks 實作 week12-2.cpp, 截圖後, 在小畫家裡面畫格子, 熟悉格子的內容 week12-2.png
+
+## step02-2_接下來是二維陣列的使用,口訣是左手i 右手j, 因此迴圈在寫的時候, 左邊迴圈i, 右邊迴圈j。在使用陣列時, 括號裡也是[i][j], 另外自己注意跳行的部分。請利用 CodeBlocks 實作 week12-3.cpp 裡面有利用迴圈來印出陣列的值。截圖,並用小畫家,把 左手i, 右手j 好好畫清楚, 上傳 week12-3.png
+
+## step03-1_先做矩陣加法,了解矩陣的左手i右手j的口訣,用了好多次,加深印象。請使用瘋狂程設-上週實習課的題目(矩陣乘法),但是改寫成矩陣加法的簡化版本, 截圖上傳 week12-4.png (程式則是copy到CodeBlocks存檔成 week12-4.cpp)
+
+## step03-2_最後的大魔王,是矩陣乘法。有了剛剛矩陣加法的程式架構,便可以再修改成矩陣乘法, 重點是 c[i][j] 的值, 是用向量乘法, 也就是 c[i][j]=0 先清空, 再 c[i][j]+= a[i][k]*b[k][j]; 的迴圈k 逐項(相乘)加起來。請用瘋狂程設實作, 完成後截圖上傳 week12-5.png (程式則是copy到CodeBlocks存檔成 week12-5.cpp)
+
+## step03-3_使用 Git 指令, 將你的程式推送上GitHub
+
+- 0. Git 安裝
+- 1. 啟動 Git Bash
+- 2. 雲端下載
+	- 2.1. cd desktop
+	- 2.2. git clone https://github.com/jsyeh/2022cce
+- 3. 把你桌面的 2022cce 整理放好今天的程式碼
+- 4. 在 Git Bash 繼續下指令
+	- 4.0. cd 2022cce 
+	- 4.1. git status
+	- 4.2. git add .
+	- 4.3. git status
+- 5. commit確認你的修改
+	- 5.0. git config --global user.email jsyeh@mail.mcu.edu.tw
+	- 5.0. git config --global user.name jsyeh
+	- 5.1. git commit -m week12
+- 6. push推送上雲端
+	- 6.0. Chrome 先登入 GitHub
+	- 6.1. git push
+
