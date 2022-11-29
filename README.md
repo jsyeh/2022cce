@@ -1130,3 +1130,243 @@ int main()
 	- 6.0. Chrome 先登入 GitHub
 	- 6.1. git push
 
+
+# Week13
+
+## step01-0_考試矩陣加法,考前複習、考後簡單講同學出錯的地方,尤其是int a[n][m] 的寫法是不對的
+
+```cpp
+#include <stdio.h>
+int a[10][10], b[10][10], c[10][10];
+int main()
+{
+	int n, m;
+	scanf("%d%d", &n, &m );
+	
+	for(int i=0; i<n; i++){
+		for(int j=0; j<m; j++){
+			scanf("%d", &a[i][j] );
+		}
+	}
+	for(int i=0; i<n; i++){
+		for(int j=0; j<m; j++){
+			scanf("%d", &b[i][j] );
+		}
+	}
+
+	for(int i=0; i<n; i++){
+		for(int j=0; j<m; j++){
+			c[i][j] = a[i][j] + b[i][j];
+		}
+	}
+	
+	for(int i=0; i<n; i++){
+		for(int j=0; j<m; j++){
+			printf("%d ",  c[i][j] );
+		}
+		printf("\n");
+	}
+}
+```
+
+```cpp
+#include <stdio.h>
+int a[10][10], b[10][10], c[10][10];
+int main()
+{
+	int n, m;
+	scanf("%d%d", &n, &m );
+	
+	for(int i=0; i<n; i++){
+		for(int j=0; j<m; j++){
+			scanf("%d", &a[i][j] );
+		}
+	}
+	for(int i=0; i<n; i++){
+		for(int j=0; j<m; j++){
+			scanf("%d", &b[i][j] );
+		}
+	}
+
+	for(int i=0; i<n; i++){
+		for(int j=0; j<m; j++){
+			printf("%d ",  a[i][j] + b[i][j] );
+		}
+		printf("\n");
+	}
+}
+```
+
+## step01-1_示範左手i右手j的幾個應用,像是選擇排序、最佳買賣點等
+
+```cpp
+#include <stdio.h>
+
+int a[5] = {5, 4, 3, 2, 1};
+
+int main()
+{ ///可以把所有的比對,全部做過一次!!!!
+    for(int i=0; i<5; i++){ ///左手i
+        for(int j=i+1, j<5; j++){ ///右手j
+            if( a[i] > a[j] ){ ///反過來
+                int temp=a[i]; ///就交換
+                a[i] = a[j];
+                a[j] = temp;
+            }
+        }
+    }
+
+    for(int i=0; i<5; i++) printf("%d ", a[i] );
+}
+```
+
+## step02-1_實習課有一題比較有變化的費氏數列, 同學可能看不懂, 為了讓同學了解最基礎的Fibonacci費氏數列,
+
+```cpp
+///Fibonacii 費氏數列
+#include <stdio.h>
+int a[50];
+
+int main()
+{
+    a[0] = 0;
+    a[1] = 1;
+    printf("1 "); ///補印一下 a[1] 項
+
+    for(int i=2; i<20; i++){ ///從a[2]開始印
+        a[i] = a[i-1] + a[i-2];
+        printf("%d ", a[i] );
+    }
+
+}
+```
+
+## step02-1b_實習課的 Fibonacci第3i項,可以利用前面簡單的Fibonacci數列算出來後, 再利用 for迴圈把3i項印出來
+
+```cpp
+///Fibonacii 費氏數列
+#include <stdio.h>
+int a[50];
+
+int main()
+{
+    a[0] = 0;
+    a[1] = 1;
+    //printf("1 "); ///補印一下 a[1] 項
+
+    for(int i=2; i<20; i++){ ///從a[2]開始印
+        a[i] = a[i-1] + a[i-2];
+        //printf("%d ", a[i] );
+    }
+    
+    int n;
+    scanf("%d", &n);
+    for(int i=0; i<n; i+=3){
+    	printf("%d ", a[i] );
+    }
+
+}
+```
+
+## step02-2_接下來教新的進度,課本第5章教函數函式, 什麼是函數、函式呢 其實 int main() 也是個函式,會 return 0; 我們照課本實作 int addnum(int a, int b) 的函式 return a+b 的結果,讓同學熟悉函式的定義、宣告、函式的使用
+
+```cpp
+#include <stdio.h>
+
+int addnum(int a, int b)
+{
+    return a + b;
+}
+
+int main()
+{
+    printf("addnum(2,3)會吐出: %d",  addnum(2,3) );
+    return 0;
+}
+```
+
+## step02-3_課本的函式的圖畫得很棒, 像一個有魔法的神奇箱子,左邊會return吐出來, 上方會傳數值進去箱子。不過有的函式不吐東西出來,就會在函式宣告時, 在左邊寫 void 註明它不會吐東西出來。
+
+```cpp
+#include <stdio.h>
+
+void display_num( int a )
+{
+    printf("你丟給display_num()的參數引數是: %d\n", a );
+    return; ///如果是 void 可以不用寫 return
+}
+
+int main()
+{
+
+    display_num( 100 );
+    display_num( 200 );
+
+}
+```
+
+## step03-1_函式在使用之前, 需要先 定義 or 宣告它的形狀。
+
+```cpp
+#include <stdio.h>
+void display_num(int); ///宣告declare
+
+int main()
+{
+    display_num(5); ///使用、呼叫它
+}
+
+void display_num(int a) ///定義 函式的細節
+{
+    printf("你丟給display_num()的參數引數是: %d\n", a );
+    return;
+}
+```
+
+## step03-2_複習上上週的實習課題目,矩陣順時針旋轉。這個題目要用到第一節課教過的「左手i右手j」的口訣,先畫出直覺簡單but錯誤的結果, 再照著錯誤的結果,去想「output的迴圈要怎麼跑」, 腦海中出現兩個箭頭,思考迴圈從哪裡到哪裡。
+
+```cpp
+include <stdio.h>
+
+int a[100][100];
+
+int main()
+{
+	int n, m;
+	scanf("%d%d", &n, &m);
+	for(int i=0; i<n; i++){
+		for(int j=0; j<m; j++){
+			scanf("%d", & a[i][j] );
+		}	
+	}
+	
+	printf("\n");
+	for(int j=0; j<m; j++){
+		for(int i=n-1; i>=0; i--){
+			printf("%2d ", a[i][j] ); 
+		}	
+		printf("\n");
+	}	
+}
+```
+
+## step03-3_使用 Git 指令, 將你的程式推送上GitHub
+
+- 0. 安裝 Git for Windows
+- 1. 開啟 Git Bash 
+- 1.1. cd desktop (這個指令可以到桌面)
+- 1.2. git clone https://github.com/你的帳號/2022cce
+- 1.3. cd 2022cce (這個指令可以到你的倉庫目錄)
+- 1.4. start . (這個指令可以把你現在的目錄開起來)
+- 2. 修改你的目錄的資料夾,把 week13準備好
+- 3. 準備 add 囉 
+- 3.1. git status
+- 3.2. git add .
+- 3.3. git status
+- 4. 準備 commit
+- 4.0. git config --global user.email jsyeh@mail.mcu.edu.tw
+- 4.0. git config --global user.name jsyeh
+- 4.1. git commit -m week13
+- 5. 推送上雲端
+- 5.1. git push
+- 5.0. Chrome 要登入GitHub
