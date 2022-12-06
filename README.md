@@ -1370,3 +1370,237 @@ int main()
 - 5. 推送上雲端
 - 5.1. git push
 - 5.0. Chrome 要登入GitHub
+
+
+# Week14
+
+## step01-0_考試「Fibonacci數列」趁機複習陣列、迴圈。考前複習、考後講解。
+
+```cpp
+#include <stdio.h>
+int a[50];
+
+int main()
+{
+	a[0]=0;
+	a[1]=1;
+	for(int i=2; i<=45; i++){
+		a[i] = a[i-1] + a[i-2];
+	}
+
+	int n;
+	scanf("%d", &n);
+	for(int i=1; i<=n; i++){
+		printf("%d ", a[i] );
+	}
+}
+```
+
+```cpp
+#include <stdio.h>
+int a[50];
+
+int main()
+{
+	int n;
+	scanf("%d", &n);
+	a[0]=0;
+	a[1]=1;
+	printf("1 ");
+	for(int i=2; i<=n; i++){
+		a[i] = a[i-1] + a[i-2];
+		printf("%d ", a[i] );
+	}
+}
+```
+
+## step01-1_上週教過函式的宣告declare 定義define 及使用呼叫call, 所以我們就照著課本的範例,重寫一次複習。關於參數的部分, int sum( int a, int b ); 老師請大家去想, 就好像教室是個大盒子, 有2個門可以進來, 在門上包透明塑膠膜, 前門走進來的人, 臉上就會貼著 int a。後門進來的人, 臉上就會貼著 int b。在使用前,要先宣告或定義。
+
+```cpp
+///複習: 整數變數的宣告 int a; a是整數的形狀
+///複習: 函式的宣告(講它的形狀)
+/// int sum( int a, int b ); 宣告它的形狀
+
+#include <stdio.h>
+int sum( int a, int b ); ///先宣告 declare
+
+int main()
+{///在用之前,要先宣告declare 或 定義define
+    int ans = sum(2, 3); ///使用 呼叫
+    printf("ans: %d\n", ans);
+}
+int sum( int a, int b ) ///定義 define, 只能定義一次
+{
+    return a + b;
+}///回傳 回覆人家
+```
+
+## step02-1_接下來介紹變數的範圍(variable scope),房間裡的變數(local variable),只能在房間裡看到。外面的變數(global variable)可以被大家看到。用CodeBlocks實作印出一堆中文及數值, 了解外面的變數,可以被大家看到、亂改。
+
+```cpp
+///變數的範圍variable scope
+/// 房間裡的,只能在房間裡使用
+/// 外面的變數, 可以被大家看到
+#include <stdio.h>
+int z=10;
+void func()
+{
+    int y;
+    printf("剛進來func()時, z是%d\n", z);
+    z = 2;
+    printf("在func()裡,把z改成%d\n", z);
+}
+int main()
+{
+    int x;
+    func();
+
+    printf("在 main()裡, z的值是%d\n", z);
+    z = 1;
+    printf("在main()裡改 z的值, 現在是%d\n", z);
+}
+```
+
+## step02-2_房間裡的變數(local) 只能在房間裡面看到。我們在 funcA() 裡有 int a=10; 在 funcB()裡面有 int a=30; 在外面 global變數有 int a=20; 則大家有自己看得到的範圍。
+
+```cpp
+///變數的範圍variable scope
+/// 房間裡的,只能在房間裡使用
+/// 外面的變數, 可以被大家看到
+/// 三重劉德華 土城金城武
+#include <stdio.h>
+int a=20; ///global 全球、全世界都看得到的天王
+void funcA()
+{///新北市的
+    int a=10;///local 天王
+    printf("funcA裡面印a:%d\n", a);
+}
+void funcB()
+{///桃園市的
+    int a=30;///local 天王
+    printf("funcB裡面印a:%d\n", a);
+}
+int main()
+{
+    printf("在 main()看到的a是:%d\n", a);
+    funcA();
+    funcB();
+    printf("在 main()看到的a是:%d\n", a);
+}
+```
+
+## step02-3_利用 python tutor (c tutor) 及 lightbot 讓大家熟悉函式呼叫函式的運作過程
+
+## step03-1_函式呼叫函式的部分, 我們就是用最大公因數-輾轉相除法-函式的版本, 讓大家練習。我們先用 51,68 這兩個數字來練習,使用for迴圈暴力法,看能不能整除、約分。接下來用while迴圈,老大a、老二b、生出老三c, 老三c是0時, b是答案。最後用函式呼叫函式 int gcd(int a, int b) 來解決,程式很清爽。
+
+先用簡單的程式, 了解暴力法
+```cpp
+///最大公因數 為了約分
+///ex. 51/68 可以約分嗎?
+///暴力法
+#include <stdio.h>
+int main()
+{
+    int ans;
+    for(int i=1; i<=68; i++){
+        if( 51%i==0 && 68%i==0 ){
+            ans = i;
+        }
+    }
+    printf("ans:%d\n", ans);
+}
+```
+
+再改成用變數的版本
+
+```cpp
+///最大公因數 為了約分
+///ex. 51/68 可以約分嗎?
+///暴力法
+#include <stdio.h>
+int main()
+{
+    int a, b;
+    scanf("%d%d", &a, &b);
+    int ans;
+    for(int i=1; i<=a; i++){
+        if( a%i==0 && b%i==0 ){
+            ans = i;
+        }
+    }
+    printf("ans:%d\n", ans);
+}
+```
+
+再改用 輾轉相除法 while 迴圈做做看
+
+```cpp
+///最大公因數 為了約分
+///ex. 51/68 可以約分嗎?
+///用輾轉相除法
+#include <stdio.h>
+int main()
+{
+    int a, b, c;
+    scanf("%d%d", &a, &b);
+    while(1){///迴圈一直做
+        c = a%b;///老三
+        printf("a:%d b:%d c:%d\n", a,b,c);
+        if(c==0) break;
+
+        a = b;
+        b = c;
+    }
+    printf("%d", b);
+}
+```
+
+最後用輾轉相除法 函式呼叫函式 
+
+```cpp
+///最大公因數 為了約分
+///ex. 51/68 可以約分嗎?
+///用輾轉相除法 函式呼叫函式
+#include <stdio.h>
+///最大公因數的英文 greatest common divider/divisor?
+int gcd(int a, int b)
+{    /// 老大  老二
+    printf("a:%d b:%d\n", a, b);///這只是印出來,考試不用寫
+    if(a==0) return b;
+    if(b==0) return a;
+            ///老二 老三
+    return gcd( b, a%b );
+}
+int main()
+{
+    int a, b;
+    scanf("%d%d", &a, &b);
+
+    int ans = gcd(a,b);
+    printf("%d\n", ans);
+}
+```
+
+
+## step03-1b_利用 c tutor 了解輾轉相除法的函式呼叫函式
+
+## step03-2_下課前,利用Git指令,將程式上傳到GitHub
+
+- 0. 安裝 Git 軟體
+- 1. Git Bash (進入桌面,clone複製你雲端,進入你的2022cce目錄, 開你的資料夾)
+- 1.1. cd desktop
+- 1.2. git clone https://github.com/jsyeh/2022cce
+- 1.3. cd 2022cce 
+- 1.4. start . 
+- 2. 把你的程式, 在檔案總管裡, 放好檔案
+- 3. 加入倉庫 (紅色、add、綠色)
+- 3.1. git status 
+- 3.2. git add .
+- 3.3. git status 
+- 4. 要 commit 確認你的修改
+- 4.0. git config --global user.email jsyeh@mail.mcu.edu.tw
+- 4.0. git config --global user.name jsyeh
+- 4.1. git commit -m week14
+- 5. 推送上雲端
+- 5.0. Chrome 登入 GitHub
+- 5.1. git push
