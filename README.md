@@ -1604,3 +1604,174 @@ int main()
 - 5. 推送上雲端
 - 5.0. Chrome 登入 GitHub
 - 5.1. git push
+
+# Week15
+
+## step01-0_考試 gcd()函式, 要考大家函式的宣告定義、使用、函式呼叫函式等觀念。考前複習、考後講解
+
+## step01-1_為了認識字串 vs. 陣列, 老師就課本第4章開始介紹。先看大家熟悉的 int a[4] = {1, 2, 3, 4}; 能用 %d 印出來。接下來是 char b[4] = {49, 50, 51, 52}; 看它用%c 及 %d 印出來的是什麼, 來了解字元 用不同的方法印出來是不同的。
+
+```cpp
+#include <stdio.h>
+int main()
+{
+    int a[4] = {1, 2, 3, 4};
+    char b[4] = {49, 50, 51, 52};
+
+    printf("%d %d\n", a[0], a[1] );
+
+    printf("%c %c\n", b[0], b[1] );
+    printf("%d %d\n", b[0], b[1] );
+}
+```
+
+## step01-2_為了解 %d (Decimal數值10進位) %c (Char字母/字元)的差別, 我們使用 printf("%d : %c \n", 97, 97 ); 試了幾個數值, 像是 49, 65, 97。
+
+```cpp
+#include <stdio.h>
+///49 就是數字 '1'
+///65 就是大寫 'A'
+///97 就是小寫 'a'
+int main()
+{ ///想了解 Decimal數值10進位 vs. Char字母
+    printf("%d : %c \n", 49, 49 );
+    printf("%d : %c \n", 65, 65 );
+    printf("%d : %c \n", 97, 97 );
+}
+```
+
+## step02-1_老師講解ASCII美國國家資訊標準交換碼(可以把數字,換成字母)的設計理念(32個字母是一塊, 看不到的符號、看得到的符號、大寫字母、小寫字母), 所以 'A' 65  = 64+1, 'a' 97 = 32+32+32+1, 老師接著介紹課本的 %d %f %c %s 的意思 (完整版有20多個), 可利用 for迴圈來印出對照表。
+
+```cpp
+#include <stdio.h>
+///49 就是數字 '1'
+///65 就是大寫 'A'
+///97 就是小寫 'a'
+int main()
+{
+    /// 'A' 其實就是 65 電腦會幫你算
+    /// 65 就是大寫 'A'
+    printf("A 的值是 %d\n",  'A' );///印出: A 的值是 65
+    printf("B 的值是 %d\n",  'B' );///印出: B 的值是 66
+    printf("C 的值是 %d\n",  'C' );///印出: C 的值是 67
+
+    for( int c = 'A'; c<='Z'; c++ ){ ///小心,c是小寫的
+        printf("%c 的值是 %d\n", c, c );
+    }
+
+    for( int c = 'a'; c<='z'; c++ ){ ///小心,c是小寫的
+        printf("%c 的值是 %d\n", c, c );
+    }
+}
+```
+
+## step02-2_了解char字母是1byte (8位元), int整數是4byte(32位元),我們來了解字串是什麼。在 "Hello World" 範例中, 把字用雙引號包起來, 便是字串, 也就是很多個字母, 也就是字母的陣列。現在宣告一個字串(也就是字母陣列,或叫字元陣列)利用 for迴圈 配合陣列, 把每一個字母(或字元)印出來。
+
+```cpp
+#include <stdio.h>
+int main()
+{
+    ///printf("Hello World\n"); ///字串,很多字母,串在一起
+    char line[] = "Hello World\n"; ///字串的結尾,有'\0' 其實是0
+    ///沒寫數量的陣列,會看右邊有幾個,就會開那麼大
+
+    printf("%c\n", line[0] );
+    for(int i=0; i<12; i++){ ///i: 0,1,2,3,4,5 共6個
+        printf("=%c=", line[i] );
+    }
+}///字串可能很長, 可能很短, 不知道長度是多少, 怎麼用迴圈?
+```
+
+## step03-1_為了更了解字串,我們看課本的介紹,解釋字串 其實就是很多格的字母字元, 最後方 0 的值。字串到底有多長, 我們就一直往右查, 看到 某一格的值是 0 的時候, 就是字串結束了。 利用 scanf() 配合 %s 讀入字串, 在 printf() 配合 %s 會印出字串。利用 for迴圈, 寫出一個特別、專屬字串的迴圈, 數一數有幾個字母。
+
+```cpp
+///字串可能很長, 可能很短, 不知道長度是多少, 怎麼用迴圈?
+///字串最後面,一定是 0 值 又叫作 NULL 空, 又叫作 '\0'
+#include <stdio.h>
+int main()
+{
+    char line[3000]; ///很大的字串的空間讓你用哦
+
+    printf("請輸入很長很長的字串,不要夾空格,結尾 Enter\n");
+
+    scanf("%s", line ); ///右邊不用加 & 符號 (口訣,幫你記憶)
+    printf("它有幾個字母呢?\n");
+    printf("%s\n", line);
+
+    int count=0;
+    ///for(int i=0; line[i]!=0; i++){
+    for(int i=0;      ; i++){
+        if( line[i] == 0) break;
+        count++;
+    }
+    printf("count:%d\n", count);
+}
+```
+
+## step03-2_下週考試的題目, 是要把字串反過來印。使用的觀念,和之前的「百數反印」很像, 就是利用陣列存值, 知道長度的話, 就用 for迴圈倒過來, 就可以完成。不過現在比較麻煩的是, 字串的長度是多少呢 所以我們用 字串的迴圈, 來找出長度 N , 再利用反過來的迴圈, 完成任務。過程中, 再一次複習 字串的 scanf() 及 printf() 還有 %s 及 %c 的差別。
+
+```cpp
+///下週考試題目: 把字串反過來印
+/// ABC => CBA   1234567 => 7654321
+#include <stdio.h>
+int main()
+{
+    char line[3000];
+    printf("請輸入字串: "); ///考試不用寫這行
+
+    scanf("%s", line );
+
+    ///如果知道字串長度, 那迴圈就好寫了
+    ///回憶之前的百數反印 for(int i=99; i>=0; i--) printf("%d ", a[i]);
+    int N=0;
+    for(int i=0;    ; i++){
+        if( line[i]==0 ) break;
+        N++;
+    }///N就會是我們的長度
+
+    for(int i=N-1; i>=0; i--){
+        printf("%c", line[i] );
+    }
+}
+```
+
+## step03-3_下週考試題目「字串反印」,老師利用 strlen() 來找到字串長度, 便能順利利用百數反印的迴圈來完成任務
+
+```cpp
+#include <stdio.h>
+#include <string.h> ///字串string外掛
+
+int main()
+{
+    char line[3000];
+
+    scanf("%s", line);
+
+    int N = strlen( line ); ///字串string外掛
+
+    for(int i=N-1; i>=0; i--){
+        printf("%c", line[i] );
+    }
+}
+```
+
+## step03-4_使用 Git 指令, 將你的程式推送上GitHub
+
+- 0. 安裝 Git
+- 1. Git Bash (進入桌面, 雲端複製,進入目錄,開檔案總管)
+- 1.1. cd desktop
+- 1.2. git clone https://github.com/jsyeh/2022cce
+- 1.3. cd 2022cce
+- 1.4. start .
+- 2. 整理今天的程式, 放在 week15裡面
+- 3. 加入Git帳冊 (紅色, 加, 綠色)
+- 3.1. git status
+- 3.2. git add .
+- 3.3. git status
+- 4. 確認修改
+- 4.0. git config --global user.email jsyeh@mail.mcu.edu.tw
+- 4.0. git config --global user.name jsyeh
+- 4.1. git commit -m week15
+- 5. 推送上雲端
+- 5.1. git push
+- 5.2. 在 Chrome 記得登入
