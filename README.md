@@ -1775,3 +1775,241 @@ int main()
 - 5. 推送上雲端
 - 5.1. git push
 - 5.2. 在 Chrome 記得登入
+
+
+# Week16
+
+## step01-0_考試(字串反印),考前複習
+
+## step01-1_學期要結束,我們用複習的方式,把幾個課本新觀念講清楚。(1) #include 的東西是什麼,其實是檔案,裡面有函式的宣告,我們才能使用函式。(2) int a 是什麼, 想像成盒子。整數變數是比較大的盒子, 字元變數是比較小的盒子, 變數的4個性質,用 int a=10 可以了解其中3個性質,最後一個性質是 & 位置,也就是變數的盒子放哪裡。(3) 了解 scanf() 是怎麼把數字 精準放在某個位置的盒子, (4) 複習 %d 及 %c 的差別
+```cpp
+///複習 scanf()
+#include <stdio.h>
+///老師講解 stdio.h 是什麼
+
+int main()
+{
+    printf("請輸入數字、一個字母\n");
+    int a;
+    scanf("%d", &a );
+
+    char c;
+    scanf("%c", &c );
+
+    printf("數字是:%d 字母是:%c", a, c);
+}
+```
+
+## step02-1_了解更多的字串的函式, strlen() strcpy() strcat() strcmp() 等。使用 scanf() 配合 %s 可讀入字串, 使用 strlen() 得到長度, strcpy() 可以複製。
+
+```cpp
+///字串相關的函式
+#include <stdio.h>
+#include <string.h>
+char line[3000];
+char line2[3000]; ///在外面宣告比較好(空間大,且清為0)
+
+int main()
+{
+    printf("請輸入一行字(不要有空格)\n");
+    scanf("%s", line);
+
+    int N = strlen(line); ///函式1
+    printf("字串長度是:%d\n", N);
+
+    strcpy(line2, line);///函式2   左邊 a=10 右邊
+    printf("line2: %s\n", line2);
+
+}
+```
+
+## step02_2_想要了解address位址&, 所以要利用 C Tutor Python 的幫忙。接著照課本介紹的指標pointer 的寫法, 準備4個(有準星、可以瞄準的)指標,分別指到 int a; float f; char c; char line[10] 等, 觀察看看指標的箭頭指到哪裡。
+
+```cpp
+#include <stdio.h>
+int main()
+{
+///形狀 名字
+    int a = 10; ///值
+    int *p = &a;///位置/位址address
+
+    float f = 3.1415926;
+    float *p2 = &f;
+
+    char c = 'A';
+    char *p3 = &c;
+
+    char line[10]="Hello";
+    char *p4 = line;
+}///想要了解 &位置/位址/address
+///請 Google: C Tutor Python 便可找到能編輯程式的地方Z日木
+```
+
+## step03-1_為了讓大家實習上機考試順利, 老師把隔壁班上機考的題目逐題講解錄影。有些題目比較煩雜、要用到比較多奇怪的觀念, 程式比較不好看、不好記, 而且可能不只一種寫法。我們挑裡面最簡單的一題讓大家實作。請在瘋狂程設-第12週實習課, 把 Fibonacci 3i 的題目拿來寫
+
+```cpp
+///(SLJ-Array-010) Fibonacci 第3i項 :
+///輸入n(最大到50), 用一個陣列產生F[0]...F[n],
+///輸出F[0],F[3],F[6],... Fibonacci 如下 F[0]=0, F[1]=1, F[n]=F[n-1]+F[n-2]
+#include <stdio.h>
+int a[50];
+
+int main()
+{
+	a[0]=0;
+	a[1]=1;
+
+	int n;
+	scanf("%d", &n);
+	for(int i=2; i<=n; i++){
+		a[i] = a[i-1] + a[i-2];
+	}
+
+	for(int i=0; i<n; i++){
+		if(i%3==0) printf("%d ", a[i] );
+	}
+}
+```
+
+```cpp
+/*
+請輸入最小與最大兩值 a 與 b
+產生乘法表
+例: 輸入 3 6
+ 3x 3= 9   3x 4=12   3x 5=15   3x 6=18
+ 4x 3=12   4x 4=16   4x 5=20   4x 6=24
+ 5x 3=15   5x 4=20   5x 5=25   5x 6=30
+ 6x 3=18   6x 4=24   6x 5=30   6x 6=36
+*/
+
+#include <stdio.h>
+int main()
+{
+	int a, b;
+	scanf("%d%d", &a, &b);
+	for(int i=a; i<=b; i++){
+		for(int j=a; j<=b; j++){
+			printf("%2dx%2d=%2d  ", i, j, i*j);
+		}
+		printf("\n");
+	}
+
+}
+```
+
+```cpp
+///(SLJ-Array-003) 及格與不及格 : 及格與不及格,
+///輸入個數,再輸入分數, 其中<0 與 >100 不計需要重新輸入,
+///輸出所有及格與不及格的分數.
+
+#include <stdio.h>
+int pass[2000];
+int down[2000];
+int passN=0, downN=0;
+
+int main()
+{
+	int n;
+	scanf("%d", &n);
+	printf("\npass:");
+	for(int i=0;     ; i++){
+		int now;
+		scanf("%d", &now);
+		if( now>100) continue;
+		if( now<0) continue;
+
+
+		if( now>=60 ){ //add one pass
+			 printf("%4d", now );
+		} else { //add one down
+			down[downN] = now;
+			downN++;
+		}
+		n--;
+		if(n==0) break;
+	}
+	printf("\ndown:");
+	for(int i=0; i<downN; i++) printf("%4d", down[i] );
+
+}
+```
+
+```cpp
+///(SLJ-Array-002) 均標人數 :
+///請輸入任意個分數(最多20個)，最後一個資料以負數結束輸入，
+///注意 >100 和 <0 的分數不計算，然後計算並且輸出平均分數，再計算>=平均分數的人數輸出。
+
+#include <stdio.h>
+int a[30];
+
+int main()
+{
+	int N=0;
+	float sum=0;
+	for(int i=0; i<20; i++){
+		scanf("%d", & a[i] );
+		if( a[i] > 100 ) continue;
+		if( a[i] < 0 ) break;
+		sum += a[i];
+		N++;
+	}
+
+	float average = sum/N;
+	printf("%.2f ", average);
+
+	int ans=0;
+	for(int i=0; i<20; i++){
+		if( a[i] > 100 ) continue;
+		if( a[i] < 0 ) break;
+		if( a[i] > average) ans++;
+	}
+	printf("%d", ans);
+
+}
+```
+
+## step03-2_示範上週的實習課作業,函式呼叫函式的部分,想的時候很難,但想通、看到結果時,卻也覺得很簡單。需要一些經驗、靈感
+
+```cpp
+///(SLJ-Function-006) 遞迴函數計算N! :
+///遞迴函數計算N! 例. 9 362880 例. 0 1 例. 5 120
+
+#include <stdio.h>
+int func(int n)
+{
+	if(n==0) return 1;//???
+	if(n==1) return 1;
+	return n * func(n-1);
+}
+int main()
+{
+	int N;
+	scanf("%d", &N);
+
+	int ans = func(N);
+	printf("%d", ans );
+}
+```
+
+```cpp
+///(SLJ-Recursion-004) 遞迴計算 a+(a+1)+(a+2)+...+b :
+///輸入 a 與 b, 以遞迴方式計算 a+(a+1)+(a+2)+...+b,
+///如果 a>b, 結果為0. 如果 a<=b , 則先遞迴計算出 (a+1)+...+b，最後再加上 a． 例. 3 7 25
+
+#include <stdio.h>
+int func(int a, int b)
+{
+	if(a>b) return 0;
+	if(a==b) return b;
+	return  a + func(a+1, b);
+}
+
+int main()
+{
+	int a, b;
+	scanf("%d%d", &a, &b);
+
+	int ans = func(a, b);
+	printf("%d", ans);
+}
+```
