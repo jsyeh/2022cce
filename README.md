@@ -2013,3 +2013,110 @@ int main()
 	printf("%d", ans);
 }
 ```
+
+
+# Week17
+
+
+## week17_background_size_rect_line 用了4個函式來畫圖
+
+```processing
+//- 在桌面有 Processing資料夾
+//- File-Preferences 加大字型
+//標楷體可以寫中文哦!
+size(400,400); //設定你的程式大小
+background(255,255,0); //設定背景色
+rect(100,100,200,200); //畫四邊形
+line(100,100,300,300); //畫線
+//File-Save As 存檔, 不能有符號+-*/、中文
+```
+## week17_setup_draw 可以利用 void setup() 設定, void draw() 每秒畫60次, 做出可互動的程式
+
+```processing
+//Ctrl-N開新檔案
+//互動 setup() + draw()
+void setup(){ //開始設定
+  size(400,400);
+  background(255,255,0);
+}
+void draw(){ //畫圖 1秒60次
+  rect(mouseX,mouseY,100,100);
+}
+```
+
+## week17_painter_mousePressed_keyPressed_stroke 可以利用 mouse 及 key 進行互動, 配合 stroke()換色
+
+```processing
+void setup(){//Ctrl-N開新檔案, 小畫家
+  size(400,400);
+  background(#F5E319);
+}
+void draw(){
+  if(mousePressed){
+    line(mouseX,mouseY,pmouseX,pmouseY);
+  }
+}
+void keyPressed(){
+  if(key=='1') stroke(255,0,0); //紅色
+  if(key=='2') stroke(0,255,0); //綠色
+}
+```
+
+## week17_PImage_loadImage_image
+
+```processing
+//Ctrl-N 開新檔案, 圖檔
+PImage img; // 宣告變數 global全域變數
+void setup(){
+  size(400,400);
+  img = loadImage("map.png"); // 讀入圖片
+}      //圖片要事先放到資料夾
+
+void draw(){
+  image(img, 0, 0);
+}
+```
+
+## week17_SoundFile_loop 要先把 Processing 的 Sketch-Library-Manage Libraries 裡, 找到 sound 的 library, Install 好後, 便可以有相關的範例 (File-Examples-Libraries-Sound-JumbleSoundfile 會播聲音), 模仿它。先 import, 再宣告 SoundFile file; 再 setup()裡 file = new SoundFile(this, "beat.aiff"); 再 file.loop(); 記得把 beat.aiff 放到你的程式中, 便能在你的電腦裡播聲音。
+
+```processing
+//Ctrl-N 開新程式,音樂
+//Sketch-Libary-Manager Libraries
+//找 sound 看到 Sound 可以 Install
+//裝好後, 便可以有整套聲音的功能
+//File-Examples 可看到 Libraries裡
+//  Sound 裡 Soundfile-SimplePlayback
+//  可以看它的範例
+import processing.sound.*;
+SoundFile file;
+void setup(){
+  size(400,400);     //要先把 beat.aiff拉進來
+  file = new SoundFile(this, "beat.aiff");
+  file.loop();  //無限播放
+}
+void draw(){
+  
+}
+```
+
+## week17_random
+
+```processing
+//Week17_random 抽籤的程式
+void setup(){
+  size(400,400);
+}
+int result=0;
+void draw(){
+  background(#FFFFF2);
+  if( dist(mouseX,mouseY,300,300)<50) fill(0,255,0);
+  else fill(255,255,0); //填在裡面的色彩 綠色 or 黃色
+  ellipse(300,300, 100,100); //畫圓(圓心、長寬)
+  
+  fill(0); //字要黑色的
+  textSize(30); //字的大小
+  text("Press Me", 300-50,300); //畫出字
+  if(mousePressed) result = int(random(10));
+  text(result, 100,200);
+}
+```
