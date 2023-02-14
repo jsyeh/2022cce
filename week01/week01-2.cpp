@@ -1,11 +1,16 @@
+///存檔成 week01-2.cpp 檔名要自己打cpp
 #include <stdio.h>
-
+///任務:讀入資料(很多字母), 先從1個字母、1個整數
 int main()
 {
-   printf("Hello World\n");
-   printf("Hello World\n");
-   printf("我是友銓同學\n");
-   ///有時候中文會有問題,你可用英文
-   //註解 comments 是給人看的 作業2加註解
-   ///CodeBlocks如果畫3條,會比較深
+    printf("請輸入1個字母: ");
+    char c; ///字母
+    scanf("%c", &c);
+    printf("你輸入了 %c \n", c);
+
+    printf("請輸入1個整數: ");
+    int a; ///整數
+    scanf("%d", &a);
+    printf("你輸入了 %d \n", a);
+    return 0;
 }
