@@ -190,3 +190,190 @@ int main()
 
 
 另一種作法: GitHub for Desktop
+
+
+
+# Week02
+
+## step01-0_考前複習
+
+(YEH014_many_2) 史上最多2的一天 : 
+史上最多2的一天 
+新聞報導, 本週二是 2022-02-22, 也是農曆正月22日, 如果在 2點22分22秒, 就有更多2了。 
+
+請寫出程式,將數一數, 到底有幾個2, 印出來 
+
+- Input 可能會有很多行, 每一行裡會有許多字母, 但是不會有空格, 方便你用 scanf()讀入字串。
+- Output: 每一行 Input 就算出對應的2有幾個, 並印出來。最後一行再要秀出全部的 測資中「總共有幾個2」。 
+
+```cpp
+#include <stdio.h>
+#include <string.h> //strlen()
+int main()
+{
+	char line[999];
+	
+	int total = 0;
+	while( scanf("%s", line) == 1 ){
+		int N = strlen(line);
+		int ans=0;
+		for(int i=0; i<N;i++){
+			if(line[i]=='2') ans++;
+		}
+		printf("%d\n", ans);
+		total += ans;
+	}
+	printf("Total: %d\n", total);
+}
+```
+
+另一種寫法
+```cpp
+#include <stdio.h>
+
+int main()
+{
+	char line[999];
+	
+	int total = 0;
+	while( scanf("%s",line)==1 ){
+		
+		int ans = 0;
+		for(int i=0; line[i]!=0; i++){
+			if(line[i]=='2') ans++;
+		}
+		printf("%d\n", ans);
+		total += ans;
+	}
+	printf("Total: %d\n", total);
+}
+```
+
+## step01-1_老師介紹「勇敢的戰士」用 while迴圈,配合 scanf()讀資料, 沒看懂題目,先算答案 瘋狂程設第03週的題目, 練習模式,截圖上傳week02-1.png。 (程式碼請copy到CodeBlocks存檔成 week02-1.cpp)
+
+```cpp
+///讀懂(英文的)題目,有時候有挫折
+///快速的技巧:只看你看得懂的 數字
+/// 10 12 => 2
+/// 10 14 => 4
+/// 100 200 => 100
+
+#include <stdio.h>
+int main()
+{
+    int a, b;
+
+    while( scanf("%d%d", &a, &b)==2 ){
+	    int ans = b - a;
+    	printf("%d\n", ans);
+    }
+}
+```
+
+
+## step02-1_題目沒有那麼簡單,還有2個陷阱。有很多筆資料,就要用 while()配合 scanf()來做它。另外32位元的整數不夠, 要用很長很長的整數, 所以用 long long int 而且配合 scanf()裡面要用 L L D 的小寫 %lld (不是數字11, 是小寫字母ll), 練習模式, 截圖上傳 week02-2.png (程式碼請copy到CodeBlocks存檔成 week02-2.cpp)
+
+
+
+## step02-2_是時候介紹C++的輸入輸出了。C++的輸入是用 std::cin 配合兩個大於>>來送到右邊的變數, 輸出是用 std::cout 配合兩個小於 << 來將右邊的變數值送到左邊的 console output小黑印出來。要記得 #include 它對應的 iostream 即可。一樣在瘋狂程設練習模式執行, 截圖上傳 week02-3.ng (程式碼請copy到CodeBlocks存檔成 week02-3.cpp)
+
+```cpp
+///Week02-2.cpp step02-1 讀懂(英文的)題目,有時候有挫折
+///快速的技巧:只看你看得懂的 數字
+// 10 12 => 2
+// 10 14 => 4
+// 100 200 => 100
+/// 400 300 => 100 用 if( ans < 0 ) ans = b - a
+#include <stdio.h>
+int main()
+{///很長很長的整數
+    long long int a, b; ///64位元
+
+    while( scanf("%lld%lld", &a, &b)==2 ){
+	    long long int ans = a - b;
+	    if( ans<0 ) ans = b - a;
+    	printf("%lld\n", ans);
+    }
+}
+```
+
+## step02-3_今天要把 C++ 的 cin 與 cout 教得更精簡。前面的 std::cin 和 std::cout 和 std::endl 要打很多重覆的 std:: 其實它是命名空間 namespace 的意思, 所以可在前寫 using namespace std; 講清楚, 後面就不用再寫了。瘋狂程設 截圖上傳 week02-4.png (程式碼請copy到CodeBlocks存檔成 week02-4.cpp)
+
+
+```cpp
+///Week02-3.cpp step02-2 改用 C++來寫
+#include <iostream> ///#include <stdio.h>
+
+int main()
+{///很長很長的整數
+    long long int a, b; ///64位元
+
+    while( std::cin >> a >> b ){
+	    long long int ans = a - b;
+	    if( ans<0 ) ans = b - a;
+    	std::cout << ans << std::endl;///printf("%lld\n", ans);
+    }
+}
+```
+
+```cpp
+///Week02-4.cpp step03-1 改用 C++來寫
+#include <iostream>///#include <stdio.h>
+using namespace std;
+int main()
+{
+    long long int a, b;
+
+    while( cin>>a>>b){
+        long long int ans = a - b;
+        if( ans < 0 ) ans = b - a;
+        cout<<ans<<endl;
+    }
+}
+```
+
+
+## step03-2_因為今天考試時, 有同學看不懂上週教的 for(int i=0; line[i]!=0; i++) 的字串的迴圈, 所以我們想要了解字串(字元陣列)裡面到底是什麼。先用 C Tutor 印出 char line[] = "ABC" 會看到它佔了 4格, 分別是 'A' 'B' 'C' '\0' 接下來, 我們把 '\0' 印出來, 發現它根本就是 0。請在 CodeBlocks 實作 week02-5.cpp 截圖上傳 week02-5.png
+
+```cpp
+///Week02-5.cpp step03-2 了解 '\0' 和 0 的差別
+#include <stdio.h>
+
+int main()
+{
+    printf("%d\n", '\0');
+    printf("%d\n",   0 );
+    if( '\0' == 0 ) printf("竟然相同\n");
+}
+```
+
+## step03-3_為了了解陣列、二維陣列, 先用for迴圈來看數字慢慢增加, 觀察它的順序。這個下週再教
+
+```cpp
+///Week02-6.cpp step03-3.cpp 下週再講,今天不用寫
+#include <stdio.h>
+
+int main()
+{
+    int n=0;
+    for(int i=0; i<10; i++){
+        for(int j=0; j<10; j++){
+            printf("%d ", n);
+            n++;
+        }
+        printf("\n");
+    }
+}
+```
+
+## 今天的最後一個圖 week02-6.png 上傳 GitHub
+
+0. 安裝 Git for Windows (桌面的葉正聖老師資料夾)
+1. 開啟 Git Bash 進入到桌面, clone下載 2022cce, 再進入 2022cce
+2. 用 start . 可開啟 2022cce 檔案總管, 把今天的程式,放到 week02 裡
+3. 用 Git 的 add 加進入 (可用 status 看到紅色、綠色)
+4. 用 Git 的 commit 確認、認可你的修正, 要附上 commit message
+	- 4.0. git config --global user.email jsyeh@mail.mcu.edu.tw
+	- 4.0. git config --global user.name jsyeh
+	- 4.1. git commit -m "今天是加入week02"
+5. 用 Git 的 push 推送上雲端
