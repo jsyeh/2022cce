@@ -379,3 +379,265 @@ int main()
 	- 4.0. git config --global user.name jsyeh
 	- 4.1. git commit -m "今天是加入week02"
 5. 用 Git 的 push 推送上雲端
+
+# Week03
+
+228紀念日放假
+
+# Week04
+
+## step01-0_考前複習勇敢的戰士,考後介紹同學出錯的地方
+
+```cpp
+#include <stdio.h>
+int main()
+{
+	long long int a, b;
+	
+	while( scanf("%lld%lld", &a, &b) == 2){
+		long long int ans = b - a;
+		if(a>b) ans = a - b;
+		printf("%lld\n", ans);
+	}
+}
+```
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main()
+{
+	long long int a, b;
+	while (	cin >> a >> b ){
+		long long int ans = b - a;
+		if(a>b) ans = a - b;
+		cout << ans << endl;
+	}
+}
+```
+
+## step01-1_今天的主題是迴文Palindromes, 我們使用瘋狂程設-CPE顆星廣場-最前面的 UVA401 Palindromes題目。在看不懂題目的情況下, 先把 step1 利用 while迴圈配合 scanf()把 Input Output 搞定。在瘋狂程設完成近8成正確的輸出, 
+
+```cpp
+///Week04-1.cpp step01-1
+///Step1: Input & Output OK (with while-loop)
+#include <stdio.h>
+int main()
+{
+	char line[50];
+
+	while( scanf("%s", line)==1 ){
+		printf("%s -- ", line);
+
+		//your code here!
+
+		printf("is not a palindrome.\n\n");
+	}
+}
+```
+
+## step02-1_題目需要了解什麼是迴文、什麼是鏡像字。我們先了解什麼是迴文,也就是正讀、反讀,都一樣的字。裡面需要知道字串的長度, 再配合 for迴圈,來將 i 逐項輪過。如果字串長度是N 則是 0...N-1 所以左邊是 i 對應右邊 N-1-i 往左。請在 CodeBlocks 實作 week04-2.cpp 執行 1234321 看收集了幾個 yes, 如果收集齊全,那就是迴文。
+
+```cpp
+///Week04-2.cpp step02-1 迴文
+///打 1234321 要判斷是不是迴文: 字元陣列+迴圈
+#include <stdio.h>
+#include <string.h>
+int main()
+{
+    char line[50];
+    scanf("%s", line);
+
+    int N = strlen(line);
+    int yes=0;
+    for(int i=0; i<N; i++){
+        if( line[i]==line[N-1-i] ) yes++;
+    }
+    if(yes==N) printf("全部都yes收齊,是迴文\n");
+    else printf("不是全部都yes,就不是迴文\n");
+}
+```
+
+## step02-2_有了step02-1的迴文判斷,我們把它包裝成函式 testPalindrome(char line[50])會把字串當參數丟進來, 判斷完之後, 收齊N個yes的可以return 1, 不然 return 0; 有了 int p = testPalindrome(line) 及等下要增加的 int m = testMirror(line)函式後, 便能利用 p 和 m 的值排列組合, 有
+
+```cpp
+///Week04-3.cpp step02-2
+///Step1: Input & Output OK (with while-loop)
+///Step2: 判斷迴文
+///Step3: 利用函式,來簡化程式的邏輯
+
+#include <stdio.h>
+#include <string.h> //step02-2
+int testMirror(char line[50]) //用函式來解決問題
+{
+	return 0;//先假裝都不是鏡向字啦
+}
+int testPalindrome(char line[50]) //step02-2 用函式來解決問題
+{
+    int N = strlen(line); //below is step02-1
+    int yes=0;
+    for(int i=0; i<N; i++){
+        if( line[i]==line[N-1-i] ) yes++;
+    }
+    if(yes==N) return 1; //yes太好了,收齊了 printf("全部都yes收齊,是迴文\n");
+    else return 0; //哎,沒收齊 printf("不是全部都yes,就不是迴文\n");
+}
+int main()
+{
+	char line[50];
+
+	while( scanf("%s", line)==1 ){
+		printf("%s -- ", line);
+
+		int p = testPalindrome(line);//step02-2 用函式來解決問題
+		int m = testMirror(line);//step02-2 用函式來解決問題
+		if(p==0&&m==0) printf("is not a palindrome.\n\n");
+		if(p==1&&m==0) printf("is a regular palindrome.\n\n");
+		if(p==0&&m==1) printf("is a mirrored string.\n\n");
+		if(p==1&&m==1) printf("is a mirrored palindrome.\n\n");
+	}
+}
+```
+
+## step03-1_接下來是鏡向字的部分。細看題目的描述,有個對照表,把全部的字母及它的鏡像字列出來。我們可以寫個函式 char mirrored_char(char c) 負責做對照的結果,裡面寫了36個if判斷, 非常暴力。在 main()裡面則是用迴圈, c 與 mirrored_char(c) 印出來。
+
+```cpp
+///Week04-4.cpp step03-1 做出字母對照表、對照函式
+#include <stdio.h>
+char mirrored_char(char c)
+{
+    if(c=='A') return 'A';
+    if(c=='B') return ' ';
+    if(c=='C') return ' ';
+    if(c=='D') return ' ';
+    if(c=='E') return '3';
+    if(c=='F') return ' ';
+    if(c=='G') return ' ';
+    if(c=='H') return 'H';
+    if(c=='I') return 'I';
+    if(c=='J') return 'L';
+    if(c=='K') return ' ';
+    if(c=='L') return 'J';
+    if(c=='M') return 'M';
+    if(c=='N') return ' ';
+    if(c=='O') return 'O';
+    if(c=='P') return ' ';
+    if(c=='Q') return ' ';
+    if(c=='R') return ' ';
+    if(c=='S') return '2';
+    if(c=='T') return 'T';
+    if(c=='U') return 'U';
+    if(c=='V') return 'V';
+    if(c=='W') return 'W';
+    if(c=='X') return 'X';
+    if(c=='Y') return 'Y';
+    if(c=='Z') return '5';
+    if(c=='1') return '1';
+    if(c=='2') return 'S';
+    if(c=='3') return 'E';
+    if(c=='4') return ' ';
+    if(c=='5') return 'Z';
+    if(c=='6') return ' ';
+    if(c=='7') return ' ';
+    if(c=='8') return '8';
+    if(c=='9') return ' ';
+}
+int main()
+{
+    for(char c = 'A'; c<='Z'; c++){
+        printf("%c -- %c\n", c, mirrored_char(c)  );
+    }
+    for(char c = '1'; c<='9'; c++){
+        printf("%c -- %c\n", c, mirrored_char(c)  );
+    }
+}
+```
+
+
+## step03-2_利用字串、字元陣列, 來把程式簡化成只有1個if() 下週考試可用這個版本, 也可用前一個 36行if的版本
+
+```cpp
+//Week04-5.cpp step03-2 利用字串、字元陣列, 來把程式簡化
+//成只有1個if() 下週可用這個版本, 也可用前一個 36行if的版本
+#include <stdio.h>
+
+char mirrored_char(char c)
+{
+	char table1[]="ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
+	char table2[]="A   3  HIL JM O   2TUVWXY51SE Z  8 ";
+	for(int i=0; table1[i]!=0; i++){
+		if(c==table1[i]) return table2[i];
+	}
+	return ' ';
+}
+
+int main()
+{
+	char c;
+	scanf("%c", &c);
+	printf("%c\n",  mirrored_char(c) );
+}
+```
+
+## step03-3_結合前面的程式, 將 UVA401 的 Palindromes 的程式完成
+
+```cpp
+//Week04-6.cpp step03-3
+//Step1: Input & Output OK (with while-loop)
+#include <stdio.h>
+#include <string.h> //step02-2
+char mirrored_char(char c)
+{
+	char table1[]="ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
+	char table2[]="A   3  HIL JM O   2TUVWXY51SE Z  8 ";
+	for(int i=0; table1[i]!=0; i++){
+		if(c==table1[i]) return table2[i];
+	}
+	return ' ';
+}
+
+int testMirror(char line[50]) //用函式來解決問題
+{
+    int N = strlen(line); //below is step02-1
+    int yes=0;
+    for(int i=0; i<N; i++){
+        if( mirrored_char(line[i])==line[N-1-i] ) yes++;
+    }
+    if(yes==N) return 1; //yes太好了,收齊了 printf("全部都yes收齊,是迴文\n");
+    else return 0; //哎,沒收齊 printf("不是全部都yes,就不是迴文\n");
+}
+int testPalindrome(char line[50]) //step02-2 用函式來解決問題
+{
+    int N = strlen(line); //below is step02-1
+    int yes=0;
+    for(int i=0; i<N; i++){
+        if( line[i]==line[N-1-i] ) yes++;
+    }
+    if(yes==N) return 1; //yes太好了,收齊了 printf("全部都yes收齊,是迴文\n");
+    else return 0; //哎,沒收齊 printf("不是全部都yes,就不是迴文\n");
+}
+int main()
+{
+	char line[50];
+	
+	while( scanf("%s", line)==1 ){
+		printf("%s -- ", line);
+		
+		int p = testPalindrome(line);//step02-2 用函式來解決問題
+		int m = testMirror(line);//step02-2 用函式來解決問題
+		if(p==0&&m==0) printf("is not a palindrome.\n\n");
+		if(p==1&&m==0) printf("is a regular palindrome.\n\n");
+		if(p==0&&m==1) printf("is a mirrored string.\n\n");
+		if(p==1&&m==1) printf("is a mirrored palindrome.\n\n");
+	}
+}
+```
+## step03-4_利用Git指令上傳GitHub
+
+- 0. 安裝 Git, 開啟 Git Bash
+- 1. 進入桌面, git clone 你的 2022cce, 進入 2022cce
+- 2. 使用 start . 開啟檔案總管, 把今天的程式整理好
+- 3. 使用 git add . 把今天的修改加入帳冊
+- 4. 使用 git commit -m "add week04" 的訊息 (之前要先 git config --global 把 user.email 及 user.name 設定好)
+- 5. 使用 git push 推送上雲端
