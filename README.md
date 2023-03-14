@@ -641,3 +641,170 @@ int main()
 - 3. 使用 git add . 把今天的修改加入帳冊
 - 4. 使用 git commit -m "add week04" 的訊息 (之前要先 git config --global 把 user.email 及 user.name 設定好)
 - 5. 使用 git push 推送上雲端
+
+
+# Week05
+
+
+程式設計二 2023-03-14 Week05
+1. 考試：鏡像字
+2. 主題：指標
+3. 主題：leetcode
+4. 主題：全字母句
+5. 作業評分Q&A & 實習題目
+
+## step01-0_考試前複習「鏡像字」, 利用兩種不同的寫法做示範, 並在考後講解同學出錯的地方。
+
+```cpp
+#include <stdio.h>
+int main()
+{
+	char c, ans;
+	scanf("%c", &c);
+	if(c=='A') ans = 'A';
+	else if(c=='E') ans = '3';
+	else if(c=='H') ans = 'H';
+	else if(c=='I') ans = 'I';
+	else if(c=='J') ans = 'L';
+	else if(c=='L') ans = 'J';
+	else if(c=='M') ans = 'M';
+	else if(c=='O') ans = 'O';
+	else if(c=='S') ans = '2';
+	else if(c=='T') ans = 'T';
+	else if(c=='U') ans = 'U';
+	else if(c=='V') ans = 'V';
+	else if(c=='W') ans = 'W';
+	else if(c=='X') ans = 'X';
+	else if(c=='Y') ans = 'Y';
+	else if(c=='Z') ans = '5';
+	else if(c=='1') ans = '1';
+	else if(c=='2') ans = 'S';
+	else if(c=='3') ans = 'E';
+	else if(c=='5') ans = 'Z';
+	else if(c=='8') ans = '8';
+	else ans = ' ';
+	printf("%c\n", ans);
+}
+```
+
+或另一種寫法
+
+```cpp
+#include <stdio.h>
+int main()
+{
+	char table1[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
+	char table2[] = "A   3  HIL JM O   2TUVWXY51SE Z  8 ";
+	
+	char c, ans=' ';
+	scanf("%c", &c);
+	
+	for(int i=0; table1[i]!=0; i++){
+		if(c==table1[i]) ans = table2[i];
+	}
+	printf("%c\n", ans);
+
+}
+```
+
+另外有同學寫上週教的另一種寫法
+
+```cpp
+#include <stdio.h>
+char mirrored_char(char c)
+{
+	char table1[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
+	char table2[] = "A   3  HIL JM O   2TUVWXY51SE Z  8 ";
+	for(int i=0; table1[i]!=0; i++){
+		if(c==table1[i]) return table2[i];
+	}
+	return ' ';	
+
+}
+int main()
+{
+	char c, ans=' ';
+	scanf("%c", &c);
+	
+	printf("%c\n", mirrored_char(c) );
+
+}
+```
+
+## step01-1_今天主題是指標, 首先要了解變數的4個性質(int a = 10; 型狀、名字、值, 位址(最後是放哪裡 &a), 請在 CodeBlocks 實作 week05-1.cpp 跑出變數的值 及它在memory裡的位置address
+
+```cpp
+///Week05-1.cpp step01-1 了解address位址 &a
+///變數的4個特質
+/// int a = 10;
+///型狀 int(1)
+///    名字(2)
+///       (3)值    (4)&a 住址位址 address
+#include <stdio.h>
+
+int main()
+{
+    int a = 10;
+    printf("a:%d 放在%d\n", a, &a);
+    int b = 20;
+    printf("b:%d 放在%d\n", b, &b);
+    int c = 30;
+    printf("c:%d 放在%d\n", c, &c);
+}
+```
+
+## step02-1_了解address位置位址之後, 指標變數 裡面專門放address位址, 所以宣變指標變數p, 裡面放 &a 的值, 便能用特異功能, 把 p 指到的地方的值改變。請先在 CodeBlocks 寫完 week05-2.cpp 後, 把程式 copy 到 C Tutor Python 的網站, 試跑這個程式。在網頁裡把程式執行完
+
+```cpp
+///Week05-2.cpp step02-2 了解 scanf()
+///以前就有認識過 & 符號 scanf("%d", &a);
+///會取出變數的位置
+///有些用處,像是scanf(),送貨、送炸彈、偷看別人
+///要了解指標變數 int *p;  準星
+#include <stdio.h>
+int main()
+{
+    int a = 10;
+    int * p = &a;
+
+    printf("a: %d address: %d \n", a, &a);
+    printf("p: %d point to %d \n", p, *p);
+
+    *p = 20;
+    printf("now a is: %d\n", a);
+}
+```
+
+
+
+## step01-0_考試前複習「鏡像字」, 利用兩種不同的寫法做示範, 並在考後講解同學出錯的地方。
+
+在練習之前, 老師有請大家申請 LeetCode 的帳號。不過發現題目有點難, 就下週再練習。
+
+```cpp
+///Week05-1.cpp step03-1
+/// (1) while (2) for (3) if (4) array
+#include <stdio.h>
+int main()
+{
+	int used[26] = { }; ///陣列初始都為0
+
+	char c; ///'A'...'Z' 'a'...'z' ' '
+	while( scanf("%c", &c)==1 ){
+        int i;///Q:怎麼把字母變成 0..25的值,放到 used[i]
+		if(c>='A' && c<='Z'){
+			int i = c - 'A';
+			used[i]++;
+		}else if(c>='a' && c<='z'){
+			int i = c - 'a';
+			used[i] ++;///這個字母對應的格子++
+		}
+	}
+	int bad=0;
+	for(int i=0; i<26; i++){
+        if(used[i]==0) bad=1;
+	}
+	if(bad==0) printf("Yes");
+	else printf("No");
+}
+```
