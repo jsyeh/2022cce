@@ -808,3 +808,231 @@ int main()
 	else printf("No");
 }
 ```
+
+
+# Week06
+
+## step01-0_考試「全字母字」考前複習、考後講解同學出錯的地方
+
+```cpp
+//Week06-0 step01-0 exam
+// while  for  if  array
+
+#include <stdio.h>
+
+int used[26];
+
+int main()
+{
+	char c;
+	while( scanf("%c", &c) == 1 ){
+		if( c>='A' && c<='Z' )  used[c-'A']++;
+		if( c>='a' && c<='z' )  used[c-'a']++;
+	}
+	
+	int ans=0;
+	for(int i=0; i<26; i++){
+		if( used[i]>0 ) ans++;
+	}
+	if(ans==26) printf("Yes");
+	else printf("No");
+}
+```
+
+
+```cpp
+//Week06-0 step01-0 exam
+// while  for  if  array
+
+#include <stdio.h>
+
+
+int main()
+{ //BAD BAD BAD... should be int used[26] = { };
+	//int used[26];//inside main() without init value
+	int used[26]={}; //with init value
+
+	char c;
+	while( scanf("%c", &c) == 1 ){
+		if( c>='A' && c<='Z' )  used[c-'A']++;
+		if( c>='a' && c<='z' )  used[c-'a']++;
+	}
+	
+	int ans=0;
+	for(int i=0; i<26; i++){
+		if( used[i]>0 ) ans++;
+	}
+	if(ans==26) printf("Yes");
+	else printf("No");
+}
+```
+
+```cpp
+//Week06-0 step01-0 exam
+// while  for  if  array
+
+#include <stdio.h>
+
+int used[26];
+
+int main()
+{
+	char c;
+	while( scanf("%c", &c) == 1 ){
+		if( c>='A' && c<='Z' )  used[c-'A']++;
+		if( c>='a' && c<='z' )  used[c-'a']++;
+	}
+	
+	int bad=0;
+	for(int i=0; i<26; i++){
+		if( used[i]==0 ) bad=1;
+	}
+	if(bad==0) printf("Yes");
+	else printf("No");
+}
+```
+常出錯的問題
+1. if(ans == 不能用 =
+2. while( ... == 0 )
+3. int used[26] 沒分號
+4. for(int i=...
+5. 裡面的陣列要 = {  };
+6. 雙引號 vs. 單引號
+
+## step01-1_本週主題繼續講解指標,解釋「指標就是陣列、陣列就是指標」方便大家記起來。
+
+```cpp
+///Week06-1.cpp step01-1
+///The C Programming Language 書寫:
+///指標就是陣列、陣列就是指標
+#include <stdio.h>
+int main()
+{
+    int a[5] = {10,20,30,40,50};
+    int * p;
+
+    p = a;
+    for(int i=0; i<5; i++){
+        printf("a[i]: %d  p[i]: %d\n", a[i], p[i] );
+    }
+}
+```
+
+## step01-2_今天要在 LeetCode 寫一題簡單題 9. Palindrome 迴圈, 因為2週前剛學過。使用剝皮法
+
+先寫一個版本, 確認它可以跑3筆簡單的測試資料
+
+```cpp
+//Week06-2.cpp 解 LeetCode 的程式
+//不是寫完整的程式, 只要寫一個函式
+//判斷迴文, 要用到的程式技巧: 使用 for迴圈, if判斷, while迴圈
+bool isPalindrome(int x){
+    int x2 = x; //備份x到x2
+    int r = 0; //反過來的數字, 等一下要放在 r裡面
+    while( x > 0 ){
+        r = r*10 + x%10; //剝皮
+        x = x / 10;
+    }
+    //使用剝皮法
+    // x        r
+    // 121 
+    //   1 剝皮 1
+    // 12      10
+    //  2 剝皮   +2 = 12
+    // 1       120
+    // 1 剝皮    +1 = 121
+    //最後x剝完,變成0...完了 x不能用
+    if(x2 == r) return true;
+    else return false;
+}
+```
+
+## step02-1_今天要在 LeetCode 寫一題簡單題 9. Palindrome 迴圈, 因為2週前剛學過。使用剝皮法。不過因為整數像1234567899 反過來 9987654321 會超過整數的32bit, 所以要用 64bit的很長很長的整數 long long int。
+
+```cpp
+//Week06-2.cpp 解 LeetCode 的程式
+//不是寫完整的程式, 只要寫一個函式
+//判斷迴文, 要用到的程式技巧: 使用 for迴圈, if判斷, while迴圈
+bool isPalindrome(int x){
+    int x2 = x; //備份x到x2
+    //很長很長的整數
+    long long int r = 0; //反過來的數字, 等下要放r裡面
+    while( x > 0 ){
+        //很長很長的整數
+        r = r*10 + x%10; //剝皮
+        x = x / 10;
+    }
+    //使用剝皮法
+    //最後x剝完,變成0...完了 x不能用
+    if(x2 == r) return true;
+    else return false;
+}
+```
+
+## step03-1_接下來這題,想結合 week06-1 與 week06-2 也就是「指標就是陣列」與 LeetCode寫程式的技巧。題目利用指標,傳給你一個陣列。你就用陣列的操作方法,來巡每一個陣列的值。26. Remove Duplicates 這題, 要把重覆的除掉、只留下不重覆的部分。我們在做的時候, 重覆的不做事、不重覆的往左邊搬。也就是 nums[k] = nums[i] 其中這個 k 就是目前不重覆、有效的個數。
+
+
+
+```cpp
+///Week06-3.cpp step03-1
+///LeetCode 26. Remove Duplicates from Sorted Array
+int removeDuplicates(int* nums, int numsSize){
+    //今天教: 指標就是陣列、陣列就是指標
+    int k=1;
+    for(int i=1; i<numsSize; i++) {
+        if( nums[i-1]==nums[i] ){
+            //不要做事
+        } else {
+            nums[k] = nums[i];//把新數字搬左邊
+            k++;
+        }
+    }
+    return k;
+}
+///LeetCode 不寫自己的 int main(), 所以想在你的電腦裡跑,要補下面的
+#include <stdio.h>
+int main()
+{
+    int a[11] = {0,0,1,1,1,2,2,3,3,4,4};
+
+    int k = removeDuplicates(a, 11);
+
+    for(int i=0; i<k; i++){
+        printf("%d ", a[i]);
+    }
+}
+```
+
+## step03-2b_利用 PowerPoint 來畫出前一題,是怎麼將 nums[i] 的值拿到 nums[k] 裡面的過程。最後再介紹網友分享寫LeetCode的經驗
+
+https://leetcode.com/discuss/general-discussion/1653161/my-leetcode-journey-with-some-tips
+
+
+## step03-2_實習課上機考的每一題, 老師試著解解看
+
+SOIT108_Advance_010) 進階題：億萬富翁 : 題目內容：有一個富翁的財產超過一萬億，所以常常搞不清楚財產到底有多少，現在輸入一個整數N表示富翁的財產總額，請您幫他在財產總額上，從後方每三位加一個逗號，方便閱讀。數字範圍：整數N範圍 為 1000000000000 – 999000000000000。  
+
+- Input: 33423682144992
+- Output: ﻿33,423,682,144,992
+
+```cpp
+#include <stdio.h>
+#include <string.h> //strlen(line)
+
+char line[300];
+
+int main()
+{
+	scanf("%s", line);
+	int N = strlen(line);
+	
+	for(int i=0; i<N; i++){
+		printf("%c", line[i] );
+		if((N-1-i)%3==0 && i!=N-1) printf(",");
+		//從右開始數N-1-i  (last is N-1)
+		//(左邊數是i)
+	}
+	
+}
+```
+
