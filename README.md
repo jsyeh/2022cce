@@ -1036,3 +1036,191 @@ int main()
 }
 ```
 
+# Week07
+
+## step01-0_考試考 leetcode 的 26. Remove Duplicates 的程式。有很多種不同的寫法。老師在考前複習、考後講解同學出錯的地方。
+
+```cpp
+#include <stdio.h>
+//請完成下面的 removeDuplicates()函式
+int removeDuplicates(int* nums, int numsSize){
+    //nums[0] 可以留下來
+    //nums[1]開始,都往前面比較 nums[0] vs. nums[1]
+    //for(int i=0; i<numsSize; i++) {
+    int k=1;
+    for(int i=1; i<numsSize; i++) {
+        if(nums[i-1] == nums[i]){
+            //相等,不做事
+        } else {
+            nums[k] = nums[i];
+            k++;
+        }
+    }
+    return k;
+}
+//請完成上面的 removeDuplicates()函式
+//已幫你準備好下面的 int main()函式, 請不要動它
+int main()
+{
+    int a[100];
+    int N = 0;
+    for(int i=0; scanf("%d", &a[i])==1; i++){
+        N++;
+    }
+    int k = removeDuplicates(a, N);
+    for(int i=0; i<k; i++){
+        printf("%d ", a[i]);
+    }
+}
+```
+
+```cpp
+#include <stdio.h>
+//請完成下面的 removeDuplicates()函式
+int removeDuplicates(int* nums, int numsSize){
+	int k=1;
+	for(int i=1; i<numsSize; i++){
+		if(nums[i-1]!=nums[i]){
+			nums[k] = nums[i];
+			k++;
+		}
+	}
+	return k;
+}
+//請完成上面的 removeDuplicates()函式
+//已幫你準備好下面的 int main()函式, 請不要動它
+int main()
+{
+    int a[100];
+    int N = 0;
+    for(int i=0; scanf("%d", &a[i])==1; i++){
+        N++;
+    }
+    int k = removeDuplicates(a, N);
+    for(int i=0; i<k; i++){
+        printf("%d ", a[i]);
+    }
+}
+```
+
+
+## step01-1_本週的主題是檔案入力出力,也就是Input Output, 寫法和大一上教過的 Hello World 很有關係, 只要多一行即可。使用大寫的FILE檔案指標變數 fout = fopen("file.txt", "w"); 把檔案開啟。之後用 printf()改成 前面加 f 及 fout 的 fprintf()版本。
+使用CodeBlocks實作程式 week07-1.cpp 執行印 "檔案就出現了哦"
+截圖裡內容比較多, 要開檔案總管,要看到file.txt (若家裡電腦沒有出現 .txt 就要開檢視-副檔名), 再用 Notepad 開 file.txt 看它的內容。截圖上傳 week07-1.png
+
+```cpp
+///Week07-1.cpp step01-1 檔案的Input/Output
+///先回憶大一上的 printf("Hello World\n");
+#include <stdio.h>
+
+int main()
+{///檔案指標     檔案開啟("檔名", "模式");
+    FILE * fout = fopen("file.txt", "w");
+    ///printf("Hello World\n");
+    fprintf(fout, "Hello World\n");
+
+    printf("檔案就出現了哦,請檢查檔案總管\n");
+}
+```
+
+## step01-2_接下來CodeBlocks 實作 week07-2.cpp, 改寫 scanf() 成為 fscanf()。剛剛是印出字串, 所以現在要用字串讀取的方式來做。原本是 scanf("%s", line) 讀入, 現在就改成 fscanf(fin, "%s", line); 同時 fopen("file.txt", "w") 要改成 fopen("file.txt", "r") 變成read讀的意思。因為 scanf() 會用空白斷開, 所以 Hello World 要分2次讀進來。通常出錯時, 是程式的執行目錄出錯, 導到file.txt檔案找不到。
+
+```cpp
+///Week07-2.cpp step01-2 檔案的Input/Output
+///再回憶大一上的 scanf("%s", line); 讀入一個字
+#include <stdio.h>
+
+int main()
+{///檔案指標     檔案開啟("檔名", "模式");
+ ///FILE * fout = fopen("file.txt", "w"); ///寫 write
+    FILE * fin  = fopen("file.txt", "r"); ///讀 read
+
+    ///printf("Hello World\n");
+    ///fprintf(fout, "Hello World\n");
+    char line[200];
+    ///scanf("%s", line);
+    fscanf(fin, "%s", line);
+    printf("現在執行目錄的檔案裡讀入 %s\n", line);
+
+    fscanf(fin, "%s", line);
+    printf("現在執行目錄的檔案裡讀入 %s\n", line);
+}
+```
+
+## step02-1_大一上教過泡泡排序法, 它很精典, 用到很多程式設計的技巧, 像是 if(判斷), for(迴圈), 陣列 array, 交換等。但上課一問, 大家都忘光光了。老師一步步帶大家再複習一次, 趁機熟悉程式設計的技巧。
+
+```cpp
+///Week07-3.cpp step02-1 sort排序 sorting
+///大一教過 Bubble sort 泡泡排序
+/// if判斷, for迴圈, 陣列array
+#include <stdio.h>
+int main()
+{
+    int a[10] = {9, 8, 7, 1, 2, 3, 6, 5, 4, 0};
+
+    for(int k=0; k<10-1; k++){ ///做很多次 攝影師拍團體照,排高低
+        for(int i=0; i<10-1; i++){
+            if(a[i] > a[i+1]){ ///不對的時候, 就....
+                int temp = a[i]; ///交換
+                a[i] = a[i+1];
+                a[i+1] = temp;
+            }
+        }
+        for(int i=0; i<10; i++){
+            printf("%d ", a[i] );
+        }
+        printf("\n");
+    }
+}
+```
+
+## step02-2_上學期教過的 bubble sort (a[i] .vs [i+1]做很多次) 與 selection sort(左手i 右手j) 用到了很多的程式設計技巧, 適合在大一程式設計課的練習, 但是其實他們執行效率都不快。今天上課時,放了 YouTube裡 2228萬次點閱的影片 sorting algorithms 用畫圖配聲音來理解各種排序法。Quick Sort 快速排序法很快。C 的 stdlib.h 可以使用 qsort() 配合自己的 compare 函式。
+
+```cpp
+///Week07-4.cpp step02-2 Quick Sort
+///對100萬個數字要排序
+///之前的泡泡sort, selection sort 對 10000億次的迴圈
+///但用 Quick Sort 只要 2000萬次就結束了
+#include <stdio.h>
+#include <stdlib.h> ///qsort()
+int compare(const void *p1, const void *p2)
+{
+    return *(int*)p1 - *(int*)p2;
+}
+int main()
+{
+    int a[10] = {9, 8, 7, 1, 2, 3, 6, 5, 4, 0};
+    qsort( a, 10, sizeof(int), compare);
+    for(int i=0; i<10; i++) printf("%d ", a[i] );
+}
+```
+
+## tep03-1_今天最後最帥氣的程式, 是使用 C++ 的 std::sort()來排序, 可以不用寫 compare()比大小的函式。但是要記得 #include 一個 algorithm 檔案, 同時在排序時, 要變它左右的邊界。
+
+```cpp
+///Week07-5.cpp step03-1 用 C++ 的方法來排
+
+#include <stdio.h>
+#include <algorithm> ///沒有.h 為了 std::sort()
+
+int main()
+{
+    int a[10] = {9,8,7,1,2,3,6,5,4,0};
+    std::sort(a, a+10);
+
+    for(int i=0; i<10; i++){
+        printf("%d ", a[i]);
+    }
+
+}
+```
+
+## step03-2_利用 Git 備份到 GitHub 上
+- 0. 安裝 Git, 開啟 Git Bash
+- 1. cd desktop 進入桌面, git clone https://網址, cd 2022cce
+- 2. start . 開檔案總管, 整理今天的程式 week07
+- 3. git add . 將今天的程式加入帳冊
+- 4.0. git config --global user.email jsyeh@mail.mcu.edu.tw
+- 4.0. git config --global user.name jsyeh
+- 4.1. git commit -m week07
+- 5. git push 推送上雲端
