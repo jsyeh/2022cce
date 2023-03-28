@@ -1195,7 +1195,7 @@ int main()
 }
 ```
 
-## tep03-1_今天最後最帥氣的程式, 是使用 C++ 的 std::sort()來排序, 可以不用寫 compare()比大小的函式。但是要記得 #include 一個 algorithm 檔案, 同時在排序時, 要變它左右的邊界。
+## step03-1_今天最後最帥氣的程式, 是使用 C++ 的 std::sort()來排序, 可以不用寫 compare()比大小的函式。但是要記得 #include 一個 algorithm 檔案, 同時在排序時, 要變它左右的邊界。
 
 ```cpp
 ///Week07-5.cpp step03-1 用 C++ 的方法來排
