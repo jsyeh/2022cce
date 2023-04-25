@@ -1478,3 +1478,371 @@ public:
 
 
 
+# Week11
+
+## step01-0_考試「字串交錯」考前複習、考後講解
+
+## step01-1_LeetCode Study Plan裡,入門的Day 2就有點卡住了。題目 isomorphic這個字太難, 只看題目 Input 後, 猜出這題是要看字母的對應 paper vs. title 的對應相似。foo 和 bee 也是有對應相似。解題策略是用 陣列 做出 左右2個方向的對照表。對照表一開始是空的。如果兩個方向都是空的,那就填好對照表。如果對照表比對合格,就過關、不淘汰。對了, 字串長度如果不對,可以提早淘汰。
+
+```cpp
+#include <stdio.h>
+#include <string.h> //strlen()
+int main()
+{
+	char line1[20];
+	char line2[20];
+	scanf("%s%s", line1, line2);
+	int N1=strlen(line1);
+	int N2=strlen(line2);
+	for(int i=0; i<10; i++){
+		if(i<N1) printf("%c", line1[i] );
+		if(i<N2) printf("%c", line2[i] );
+	}
+
+}
+```
+
+## step02-1_LeetCode 1046 最後的石頭。題目的陣列裡, 有一堆石頭的大小。挑最大的石頭、第二大的石頭。對敲, 剩下的石頭放回去。石頭會越來越少。最後沒有石頭時, return 0。最後只剩1顆石頭時, return 它的重量。程式有很多種寫法, 老師先用 int findMaxI()的方法, 把最大石頭的 i 取出來, 再進行比較。
+
+```cpp
+///1046. Last Stone Weight
+int findMaxI(int* stones, int stonesSize){
+    int maxI = 0;//左手拿石頭
+    for(int i=0; i<stonesSize; i++){//for迴圈
+        if(stones[i] > stones[maxI]){//if判斷 stones[i] > 手上拿的石頭
+            maxI = i;
+        }
+    }    //以下程式,會重覆一直使用啊!!!!
+    return maxI;
+}
+int lastStoneWeight(int* stones, int stonesSize){
+    while(true){
+        int i=findMaxI(stones, stonesSize);//最大石頭
+        int a = stones[i];
+        stones[i] = 0;
+        int j=findMaxI(stones, stonesSize);//第二大石頭
+        int b = stones[j];
+        stones[j] = 0;
+        printf("%d %d\n", a, b);
+        if(a==0 && b==0) return 0;//最大石頭都是0,就是0,沒剩石頭
+        if(a!=0 && b==0) return a;//只剩左手的那顆,答案
+
+        if(a-b>0){//有剩下石頭
+            stones[i] = a-b;
+        }
+    }
+    return 0;
+}
+    /*int a = findMaxI(stones, stonesSize);
+    printf("maxI: %d 對應石頭重:%d\n", a, stones[a]);///小技巧,可用 printf()印出數值,方便找問題
+    stones[a] = 0;//石頭拿走,就沒有東西了哦!!!
+    int b = findMaxI(stones, stonesSize);
+    printf("maxI: %d 對應石頭重:%d\n", b, stones[b]);
+    stones[b] = 0;
+    int c = findMaxI(stones, stonesSize);
+    printf("maxI: %d 對應石頭重:%d\n", c, stones[c]);
+    stones[c] = 0;*/
+```
+
+## step03-1_為了幫助大家通過程式設計會考, 今天的回家作業,是把銘傳銘傳會考SOIT106的簡單題(12題)都用練習模式寫過一次
+
+程式設計會考的題目講解
+
+## (SOIT106_BASE_001) 基礎題：計算幾週與幾天 : 一週有7 天，讀入天數，計算該天數是幾週又幾天。 
+
+```cpp
+#include <stdio.h>
+int main()
+{
+	int n;
+	scanf("%d", &n);
+	
+	printf("%d %d\n", n/7, n%7 );
+
+}
+```
+
+## (SOIT106_BASE_002) 基礎題：找零錢 : 假設有50元、5元和1元等3種硬幣，請輸入一個金額，並顯示等同於該金額所需的最少硬幣組合。 
+
+```cpp
+#include <stdio.h>
+int main()
+{
+	int n;
+	scanf("%d", &n);
+	
+	int n50 = n/50;
+	int n5 = (n%50)/5;
+	int n1 = (n%5)/1;
+	
+	printf("%d=50*%d+5*%d+1*%d\n", n, n50, n5, n1);
+
+}
+```
+
+## (SOIT106_BASE_003) 基礎題：N數之和 : 輸入一個整數N，之後讀入N個整數，請輸出其和。 
+
+```cpp
+#include <stdio.h>
+int main()
+{
+	int n;
+	scanf("%d", &n);
+	
+	int sum = 0;
+	for(int i=0; i<n; i++){
+		int a;
+		scanf("%d", &a);
+		
+		sum += a;
+	}
+	printf("%d\n", sum);
+}
+```
+
+## (SOIT106_BASE_004) 基礎題：計程車資計算 : 輸入里程公尺數，輸出應付的車資。計程車資計算方式為：起跳100 元(2000公尺)，續跳5元(每500公尺)。 
+
+
+```cpp
+#include <stdio.h>
+int main()
+{
+	int n, ans;
+	scanf("%d", &n);
+
+	if(n<=2000) ans = 100;
+	else if( n%500==0 ) ans = 100 + (n-2000)/500 * 5;
+	else ans = 100 + (n-2000)/500 * 5 + 5;
+	
+	printf("%d\n", ans);
+}
+```
+
+## (SOIT106_BASE_005) 基礎題：因數個數 : 輸入一個正整數，顯示所有該正整數因數的個數。 
+
+```cpp
+#include <stdio.h>
+int main()
+{
+	int n;
+	scanf("%d", &n);
+
+
+	int ans = 0;
+	for(int i=1; i<=n; i++){
+		if( n%i==0 ) ans ++;
+	}
+	printf("%d\n", ans);
+}
+```
+
+## (SOIT106_BASE_006) 基礎題：三數極大 : 輸入三個正整數，輸出其最大值。 
+
+```cpp
+#include <stdio.h>
+int main()
+{
+	int a, b, c;
+	scanf("%d%d%d", &a, &b, &c);
+	
+	int ans;
+	if(a>=b && a>=c) ans = a;
+	else if(b>=a && b>=c) ans = b;
+	else ans = c;
+
+	printf("%d\n", ans);
+}
+```
+
+## (SOIT106_BASE_007) 基礎題：計算商數 : 輸入兩個整數a，b，輸出a除以b的商。 
+
+```cpp
+#include <stdio.h>
+int main()
+{
+	int a, b;
+	scanf("%d%d", &a, &b);
+	
+	printf("%d\n", a/b);
+
+}
+```
+
+## SOIT106_BASE_008) 基礎題：兩數間可被5整除的整數 : 輸入兩個整數，找出兩數之間所有可以被5整除的整數。 
+
+```cpp
+#include <stdio.h>
+int main()
+{
+	int a, b;
+	scanf("%d%d", &a, &b);
+	
+	if(a>b){
+		int temp=a;
+		a=b;
+		b=temp;
+	}
+	
+	for(int i=a; i<=b; i++){
+		if(i%5==0) printf("%d\n", i);
+	}
+
+}
+```
+
+
+## (SOIT106_BASE_009) 基礎題：整數間最大距離 : 輸入3個相異整數，找出整數間最大的距離。 
+
+```cpp
+#include <stdio.h>
+int main()
+{
+	int a, b, c, max, min;
+	scanf("%d%d%d", &a, &b, &c);
+	
+	if(a>=b && a>=c) max=a;
+	else if(b>=a && b>=c) max=b;
+	else max = c;
+	
+	if(a<=b && a<=c) min=a;
+	else if(b<=a && b<=c) min=b;
+	else min = c;
+
+
+	printf("%d\n", max-min);
+}
+```
+
+## (SOIT106_BASE_011) 基礎題：判斷大小 : 輸入2個整數，如果第一個數字比第二個數字小；則出輸-1，如果兩個數字相等，則輸出0；如果第一個數字比第二數字大，則出輸1。 
+
+```cpp
+#include <stdio.h>
+int main()
+{
+	int a, b;
+	scanf("%d%d", &a, &b);
+	
+	if(a>b) printf("1\n");
+	if(a==b) printf("0\n");
+	if(a<b) printf("-1\n");
+
+}
+```
+
+## (SOIT106_BASE_012) 基礎題：整數轉換為等級 : 輸入一個整數，如果所輸入的整數大於或等於90，則輸出A；如果輸入的整數小於90但大於或等於80則輸出B，如果小於80但大於或等於60，則輸出C；如為其他整數，則輸出F。  
+
+```cpp
+#include <stdio.h>
+
+int main()
+{
+	int n;
+	scanf("%d", &n);
+	
+	if(n>=90) printf("A\n");
+	else if(n>=80) printf("B\n");
+	else if(n>=60) printf("C\n");
+	else printf("F\n");
+}
+```
+
+## (SOIT106_BASE_010) 基礎題：找倍數 : 連續讀入10個整數(1 – 1000)，找出所讀入的整數有幾個是3的倍數。 
+
+```cpp
+#include <stdio.h>
+int main()
+{
+	int ans=0, n;
+	for(int i=0; i<10; i++){
+		scanf("%d", &n);
+		if(n%3==0) ans++;
+	}
+	printf("%d\n", ans);
+}
+```
+
+
+
+## (SOIT107_ADVANCE_006) 進階題：除惡務盡 : 輸入一個字串，將所有字元2去除後輸出。 
+```cpp
+#include <stdio.h>
+//#include <string.h>
+int main()
+{
+	char line[300];
+	scanf("%s", line);
+	
+	//int N = strlen(line);
+	//for(int i=0; i<N; i++){
+	for(int i=0; line[i]!=0; i++){
+		if(line[i]!='2') printf("%c", line[i] );
+	}
+	printf("\n");
+}
+```
+
+另外一種寫法, 以字母為單位
+
+```cpp
+#include <stdio.h>
+int main()
+{
+	char c;
+	while( scanf("%c", &c)==1 ){
+		if(c!='2') printf("%c", c);
+	}
+	//printf("\n");
+
+}
+```
+
+## (SOIT106_ADVANCE_011) 進階題：2進位轉10進位 : 讀入一個0000 ~ 1111的2進位整數(固定4位數)，請顯示出對應的10進位數字。 
+
+```cpp
+#include <stdio.h>
+int main()
+{
+	char line[10];
+	scanf("%s", line);
+	
+	int ans=0;
+	if(line[0]=='1') ans += 8;
+	if(line[1]=='1') ans += 4;
+	if(line[2]=='1') ans += 2;
+	if(line[3]=='1') ans += 1;
+	
+	printf("%d\n", ans);
+
+}
+```
+
+另一種暴力的寫法
+
+```cpp
+#include <stdio.h>
+int main()
+{
+	int n;
+	scanf("%d", &n);
+	int ans;
+	if(n==   0) ans=0;
+	if(n==   1) ans=1;
+	if(n==  10) ans=2;
+	if(n==  11) ans=3;
+	if(n== 100) ans=4;
+	if(n== 101) ans=5;
+	if(n== 110) ans=6;
+	if(n== 111) ans=7;
+	if(n==1000) ans=8;
+	if(n==1001) ans=9;
+	if(n==1010) ans=10;
+	if(n==1011) ans=11;
+	if(n==1100) ans=12;
+	if(n==1101) ans=13;
+	if(n==1110) ans=14;
+	if(n==1111) ans=15;
+
+
+	printf("%d\n", ans);
+}
+```
