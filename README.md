@@ -1846,3 +1846,249 @@ int main()
 	printf("%d\n", ans);
 }
 ```
+
+
+# Week11
+
+## step01-0_考試四選一、考前復習、考後解說同學出錯的地方
+
+## step01-1_LeetCode 258 Add Digits 會使用到上學期教過的「剝皮法」,而且要剝很多次
+
+先用笨方法, 重覆做很多次
+
+```cpp
+int addDigits(int num){
+    // 1,999,999,999
+    int ans=0;
+    while(num>0){ //剝皮法
+        ans += num % 10;//個位數
+        num = num / 10; //數字變小了
+    }
+    num = ans; //剛剛加出11,再做一次剝皮法
+    //82
+
+    ans = 0;
+    while(num>0){
+        ans += num % 10;
+        num = num / 10;
+    }
+    num = ans;
+    //10
+
+    ans = 0;
+    while(num>0){
+        ans += num % 10;
+        num = num / 10;
+    } 
+    //1
+    return ans;
+}
+```
+
+再改用一個大的迴圈,來重覆做很多次
+
+```cpp
+//LeetCode 258 Add Digits
+int addDigits(int num){
+    while(num>=10){ //如果num是2位數以上, 繼續進行剝皮
+
+        int ans = 0;
+        while(num>0){//剝皮法
+            ans += num % 10;//個位數
+            num = num / 10; //數字變小了
+        }
+        num = ans; //最後答案放回 num 以便下一次再剝皮
+
+    }
+
+    return num;
+}
+```
+
+## step02-1_LeetCode 1822 乘起來是正的 還是負的, 老師在示範時, 利用 for迴圈 和 if判斷, 去測每一個數字是否是負的, 最後再看有幾個負數, 奇數個負號, 就return -1。不過有個特殊狀況, 如果裡面有0的話, return 0 提早結束。
+
+```cpp
+//LeetCode 1822. Sign of the Product of an Array 想看乘起來的正負號
+int arraySign(int* nums, int numsSize){
+    int ans = 0; //有幾個 <0 的負數?
+    for(int i=0; i<numsSize; i++){
+        if(nums[i] < 0) ans++;
+        if(nums[i]==0) return 0;//提早結束囉! 0沒救了
+    }
+    if(ans%2==1) return -1;
+    else return 1;
+}
+```
+
+## step02-2_LeetCode 191 有幾個1的Bits, 會用到今天第1節課用到的「剝皮法」,還有第2節課用到的「數一數有幾個」的技巧
+
+```
+LeetCode 191. Number of 1 Bits
+
+int hammingWeight(uint32_t n) {
+    int ans=0;
+    while(n>0){ //數字還沒剝完,就繼續做
+        int now = n%2; //剝一層皮
+        if(now==1) ans++; //剝下來的皮,有幾個1
+        n = n / 2; //數字又變更小了
+    }
+    return ans;
+}
+    //剝皮法
+    /*1234
+       4
+    123
+      3
+    12
+     2
+    1
+    
+    0
+    */
+```
+
+
+## step03-1_今天的會考考題, 老師錄影示範了 SOIT106_ADVANCE_001...006共6題
+
+```cpp
+///SOIT106_ADVANCE_001：進階題：反序數字
+#include <stdio.h>
+int main()
+{
+	int n;
+	scanf("%d", &n);
+
+	int n2 = n; //backup
+
+	int ans=0;
+	while(n>0){
+		ans = ans * 10 + n%10;
+		n = n / 10;
+	}
+
+	printf("%d+%d=%d\n", n2, ans, n2+ans);
+
+}
+```
+
+```cpp
+//(SOIT106_ADVANCE_002) 進階題：分式化簡 : 
+//輸入分式的分子及分母(分母不可為0)，將其化簡後的分式輸出。 
+
+#include <stdio.h>
+
+int main()
+{
+	int a, b;
+	scanf("%d%d", &a, &b);
+	
+	int ans;
+	for(int i=1; i<=a; i++){
+		if(a%i==0 && b%i==0) ans =i;
+	}
+	
+	printf("%d %d\n", a/ans, b/ans);
+}
+```
+
+```cpp
+//SOIT106_ADVANCE_003) 進階題：讀入整數反序列印 : 
+//設計一個程式，該程式可以連續讀入正整數
+//(輸入0表示結束，至多不超過10個正整數)，
+//之後將所輸入的正整數以相反序顯示在畫面上。 
+
+#include <stdio.h>
+
+int main()
+{
+	int a[11];
+	
+	int N;
+	for(int i=0; i<11; i++){
+		scanf("%d", &a[i] );
+		if(a[i]==0){
+			N = i;
+			break;
+		}
+	}
+
+
+	for(int i=N-1; i>=0; i--){
+		printf("%d ", a[i]);
+	}
+	printf("\n");
+}
+```
+
+```cpp
+//(SOIT106_ADVANCE_004) 進階題：大小寫轉換 : 
+//讀入一個字串(至多10個字元)，將字串中的大小寫英文字母相互轉換
+//(大寫轉為小寫，小寫轉為大寫)後輸出。  
+
+#include <stdio.h>
+int main()
+{
+	//char line[20];
+	//scanf("%s", line);
+	
+	//char line[11];
+	//scanf("%10s", line);
+	
+	
+	char c;
+	while( scanf("%c", &c) ==1 ){
+		if(c>='a' && c<='z') c = c-'a'+'A';
+		else if(c>='A' && c<='Z') c = c-'A'+'a';
+		
+		printf("%c", c);
+	}
+}
+```
+
+
+```cpp
+//(SOIT106_ADVANCE_005_C) 進階題：A的B次方函數  
+//題目名稱：A的B次方函數
+//題目內容：請撰寫一個函數MYPOWER(A,B)，可以計算A^B結果。
+//數字範圍：整數 1 – 9。
+//程式限制：不得使用power()函數。不得變更已給定的主程式。
+
+#include <stdio.h>
+
+int MYPOWER(int a, int b)
+{
+	int ans=1;
+	for(int i=0; i<b; i++){
+		ans = ans * a;
+	}
+	return ans;
+}
+
+int main(void)
+{
+	int a,b;
+	scanf("%d%d",&a,&b);
+	printf("[%d]",MYPOWER(a,b));
+	return 0;
+}
+```
+
+
+```cpp
+//(SOIT106_ADVANCE_006) 進階題：漸增數列相加 :
+//輸入正整數n，計算1*2+2*3+3*4+…+(n-1)*n之和。 
+#include <stdio.h>
+
+int main()
+{
+	int n;
+	scanf("%d", &n);
+	
+	int ans=0;
+	for(int i=1; i<n; i++){
+		ans += i*(i+1);
+	}
+
+	printf("%d\n", ans);
+}
+```
