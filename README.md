@@ -3347,3 +3347,583 @@ int main()
 最後,推送上雲端
 - git push
 
+# Week16
+
+## step01-0_考試,考前複習、考後講解
+
+```cpp
+///(SOIT108_Base_001) 基礎題：找千位數 :
+///讀入 1000 - 100000 的數字，找出其千位數的數字
+
+#include <stdio.h>
+int main()
+{
+	int n;
+	scanf("%d", &n);
+
+	printf("%d", n/1000  %10 );
+}
+```
+
+```cpp
+///SOIT108_Base_003) 基礎題：正整數平方總和 :
+///題目內容：輸入正整數n，可計算：1*1+2*2+...+n*n
+///之總和的結果。數字範圍：整數1~1000
+#include <stdio.h>
+int main()
+{
+	int n;
+	scanf("%d", &n);
+
+
+	int ans = 0;
+	for(int i=1; i<=n; i++){
+		ans += i*i;
+	}
+	printf("%d", ans);
+}
+```
+
+```cpp
+///(SOIT108_Base_003A) 進階題：兩數之間的3倍數總和 :
+///題目內容：請輸入兩個由小到大的正整數(起始數字與終止數字)，
+///可計算出【起始數字】到【中止數字】間所有3的倍數之總和。
+///{ex. 3 9 => 3+6+9=18} 數字範圍：整數1~1000
+
+#include <stdio.h>
+int main()
+{
+	int a, b;
+	scanf("%d%d", &a, &b);
+
+
+	int ans = 0;
+	for(int i=a; i<=b; i++){
+		if(i%3==0) ans += i;
+	}
+	printf("%d", ans);
+}
+```
+
+```cpp
+///(SOIT108_Base_004) 基礎題：判斷座標的象限 :
+///題目內容：判斷所輸入座標(x,y)的所在象限，
+///(僅考慮在四個象限的情況，不考慮在軸線及原點的情況)。
+///{ex.(1,1)屬第一象限、(-1,1)屬第二象限、
+///(-1,-1)屬第三象限、(1,-1)屬第四象限} 數字範圍：整數 -1000~1000
+
+#include <stdio.h>
+int main()
+{
+	int x, y;
+	scanf("%d%d", &x, &y);
+
+	if( x>0 && y>0 ) printf("1\n");
+	if( x<0 && y>0 ) printf("2\n");
+	if( x<0 && y<0 ) printf("3\n");
+	if( x>0 && y<0 ) printf("4\n");
+}
+```
+
+```cpp
+//(SOIT108_Base_005) 基礎題：輸入n (n>0)， 求n之所有因數和 :
+//輸入n (n>0)， 求 n之所有因數和。
+//{ex. 2之因數為1、2，因數和為因數加總1+2=3}
+#include <stdio.h>
+int main()
+{
+	int n;
+	scanf("%d", &n);
+
+
+	int ans = 0;
+	for(int i=1; i<=n; i++){
+		if(n%i==0) ans += i;
+	}
+	printf("%d", ans);
+}
+```
+
+```cpp
+//(SOIT108_Base_007) 基礎題：把數字倒著印出來 :
+//題目內容：輸入10個整數，把這10個數字倒著印出來。
+//數字範圍：整數1 – 100
+#include <stdio.h>
+int main()
+{
+	int a[10];
+
+	for(int i=0; i<10; i++){
+		scanf("%d", &a[i] );
+	}
+
+	for(int i=10-1; i>=0; i--){
+		printf("%d ", a[i] );
+	}
+}
+```
+
+```cpp
+//(SOIT108_Base_010) 基礎題：水杯接水 :
+//題目內容：有一桶水要分裝到杯子中，水桶中的水有N毫升，
+//杯子的容量為M毫升，請問至少需要幾個杯子才能承接水桶裡的水。
+//現在輸入N與M，請輸出答案。數字範圍：N為1 – 9999，M為1 –99
+#include <stdio.h>
+int main()
+{
+	int a, b;
+	scanf("%d%d", &a, &b);
+
+	int ans = a/b;
+	if(a%b>0) ans++;
+	printf("%d", ans);
+}
+```
+
+```cpp
+//(SOIT108_Base_011) 基礎題：平面兩座標的面積 : 
+題目名稱：平面兩座標的面積 (題目修改) (BACIC) 題目內容：輸入平面兩點座標的四個整數值(x1,y1,x2,y2)，計算並顯示這兩點所圍之面積。(EX.輸入(x1,y1,x2,y2)，計算(x1,y1)、(x1,y2)、(x2,y2)、(x2,y1)所圍面積。) 數字範圍：整數1 –100  
+#include <stdio.h>
+int main()
+{
+	int a, b, c, d;
+	scanf("%d%d%d%d",&a,&b,&c,&d);
+	
+	int ans = (a-c) * (b-d);
+	if(ans<0) ans = -ans;
+	
+	printf("%d", ans);
+}
+```
+
+
+## step01-1_LeetCode 705
+
+```cpp
+//LeetCode 705 Design HashSet
+class MyHashSet {
+public:
+    int a[1000001]; //這題用陣列吧!
+    MyHashSet() {
+        for(int i=0; i<=1000000; i++){
+            a[i] = 0; //沒有在裡面,空白
+        }//其實可以在 int a[1000001]={};來設成0
+    }
+
+    void add(int key) {
+        a[key] = 1; //在裡面
+    }
+
+    void remove(int key) {
+        a[key] = 0; //不在裡面
+    }
+
+    bool contains(int key) {
+        if(a[key]==1) return true;
+        else return false;
+    }
+};
+
+/**
+ * Your MyHashSet object will be instantiated and called as such:
+ * MyHashSet* obj = new MyHashSet();
+ * obj->add(key);
+ * obj->remove(key);
+ * bool param_3 = obj->contains(key);
+ */
+```
+
+
+## step02-1_會考刷題SOIT107進階題1,2,3,4
+
+```cpp
+///(SOIT107_ADVANCE_001_C) 進階題：判斷大小 :
+///寫一方法能傳入2個整數，如果第一個數字比第二個數字小，則回傳-1;
+///如果兩個數字相等，則回傳0; 如果第一個數字比第二個數字大，則回傳1。
+///印出比較後的結果。
+#include <stdio.h>
+int f(int a,int b){
+	if(a<b) return -1;
+	if(a==b) return 0;
+	if(a>b) return +1;
+}
+
+int main(){
+    int a, b;
+    scanf("%d %d", &a, &b);
+    printf("%d",f(a,b));
+    return 0;
+}
+```
+
+```cpp
+//(SOIT107_ADVANCE_002) 進階題：陣列全距 :
+//寫一陣列大小為6，依序輸入陣列元素，
+//計算陣列元素最大值與最小值的差距 
+#include <stdio.h>
+int main()
+{
+	int a[6];
+	for(int i=0; i<6; i++){
+		scanf("%d", &a[i] );
+	}
+	
+	int max = a[0], min = a[0];
+	
+	for(int i=0; i<6; i++){
+		if(a[i]>max) max = a[i];
+		if(a[i]<min) min = a[i];
+	}
+	
+	
+	printf("%d", max - min);
+}
+```
+
+
+```cpp
+/// (SOIT107_ADVANCE_003) 進階題：
+///計算一列整數的總和 :
+///請撰寫一個程式計算並印出數個整數的加總。假設以999當成警示值。
+
+#include <stdio.h>
+int main()
+{
+	int ans = 0;
+	while(1){
+		printf("Enter an integer ( 999 to end ): \n");
+		int temp;
+		scanf("%d", &temp);
+		if(temp==999) break;
+
+		ans += temp;
+	}
+
+	printf("The total is: ");
+	printf("%d", ans);
+}
+```
+
+```cpp
+///(SOIT107_ADVANCE_004) 進階題：最大公因數gcd :
+//輸入二整數 a b，輸出a b最大公因數
+
+#include <stdio.h>
+int gcd(int a, int b)
+{
+	if(a==0) return b;
+	if(b==0) return a;
+	return gcd(b, a%b);
+}
+
+int main()
+{
+	printf("Enter two integers: \n");
+	int a, b;
+	scanf("%d%d", &a, &b);
+
+
+printf("The greatest common divisor of %d and %d is ", a, b);
+	int ans = gcd(a,b);
+	printf("%d\n", ans);
+}
+```
+
+## step02-2_會考刷題SOIT107進階題5,6,7,8
+
+```cpp
+//(SOIT107_ADVANCE_005) 進階題：字串長度 : 
+//輸入兩個很大的正整數a與 b，如果a>b則輸出 1，
+//如果 a<b則輸出 -1, 如果 a=b 則輸出 0。 
+//(暗示：可用字串輸入，用字串的觀點來比大小。) 
+#include <stdio.h>
+#include <string.h>
+int main()
+{
+	char a[200], b[200];
+	scanf("%s %s", &a, &b);
+	
+	int N1 = strlen(a);
+	int N2 = strlen(b);
+	
+	if(N1>N2){
+		printf("1");
+		return 0;
+	}else if(N1<N2){
+		printf("-1");
+		return 0;
+	}
+	//if N1 == N2, need to one-by-one
+	for(int i=0; i<N1; i++){
+		if(a[i]>b[i]){
+			printf("1");
+			return 0;
+		}else if(a[i]<b[i]){
+			printf("-1");
+			return 0;
+		}
+	}
+	printf("0");
+	return 0;
+}
+```
+
+```cpp
+//(SOIT107_ADVANCE_006) 進階題：除惡務盡 : 
+//輸入一個字串，將所有字元2去除後輸出。 
+#include <stdio.h>
+int main()
+{
+	char c;
+	while( scanf("%c", &c) == 1 ){
+
+		if(c!='2') printf("%c", c);
+	}
+
+}
+```
+
+```cpp
+//(SOIT107_ADVANCE_007) 進階題：擲骰統計 :
+//輸入一字串為擲骰的結果，統計1到6點出現的狀況。
+#include <stdio.h>
+int main()
+{
+	int a[10] = { };
+
+	char c;
+	while( scanf("%c", &c)==1 ){
+		a[c-'0']++;
+		/*
+		if(c=='1') a[1]++;
+		if(c=='2') a[2]++;
+		if(c=='3') a[3]++;
+		if(c=='4') a[4]++;
+		if(c=='5') a[5]++;
+		if(c=='6') a[6]++;*/
+	}
+
+	for(int i=1; i<=6; i++){
+		printf("%d:%d\n", i, a[i] );
+	}
+}
+```
+
+```cpp
+//(SOIT107_ADVANCE_008_C_C++) 進階題：函數判斷質數 :
+//設計一個函數prime(n)，可以判斷n是否為質數：
+//如果是質數則回傳1，否則回傳0。 
+#include <iostream>
+using namespace std;
+int prime(int n)
+{
+	int bad=0;
+	for(int i=2; i<n; i++){
+		if(n%i==0) bad=1;
+	}
+
+	if(bad==0) return 1;
+	else return 0;
+}
+
+int main(){
+  int n;cin>>n;
+  cout<<"["<<prime(n)<<"]";
+  return 0;
+}
+/* 上方 C++ 的 main 函數 等價於 下方 C 的 main 函數
+int main(void){
+    int n;
+    scanf("%d", &n);
+    printf("[%d]", prime(n));
+    return 0;
+}
+*/
+```
+
+
+##  step03-1_會考刷題SOIT107進階題10,11, SOIT107進階題8,9
+
+```cpp
+//(SOIT107_ADVANCE_010) 進階題：判斷迴文 :
+//讀入一個至多80個字的字串，判斷字串是否為迴文
+//(即由左而右，由右而左，順序相同，大小寫字母視為相異)。
+//如果是迴文則輸出YES，如果不是則輸出NO。
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+	char line[200];
+	scanf("%s", line);
+
+	int N = strlen(line);
+
+	int bad = 0;
+	for(int i=0; i<N; i++){
+		if(line[i] != line[N-1-i]) bad=1;
+	}
+
+
+	if(bad==1) printf("NO");
+	else printf("YES");
+}
+```
+
+```cpp
+// (SOIT107_ADVANCE_011) 進階題：字串中的數字個數 :
+//讀入一個至多80個字的字串，找出字串中有多少個數字。
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+	char line[200];
+	scanf("%s", line);
+
+	int N = strlen(line);
+
+	int ans = 0;
+	for(int i=0; i<N; i++){
+		if(line[i]>='0' && line[i]<='9') ans++;
+	}
+
+	printf("%d\n", ans);
+}
+```
+
+```cpp
+//(SOIT108_Advance_008) 進階題：10數排序，
+//從大到小排好 : 題目內容：輸入10個數字，
+//把它們從大到小排好。數字範圍：整數1 – 100。
+#include <stdio.h>
+int main()
+{
+	int a[10];
+	for(int i=0; i<10; i++){
+		scanf("%d", &a[i] );
+	}
+
+	for(int i=0; i<10; i++){
+		for(int j=i+1; j<10; j++){
+			if( a[i] < a[j] ){
+				int temp = a[i];
+				a[i] = a[j];
+				a[j] = temp;
+			}
+		}
+	}
+
+	for(int i=0; i<10; i++){
+		printf("%d ", a[i] );
+	}
+}
+```
+
+```cpp
+//(SOIT108_Advance_009) 進階題：奇數反流 :
+//題目內容：輸入一個整數N，後接N個整數。
+//請將這N個數中的奇數，依照出現順序反向印出。
+//數字範圍：N與整數的範圍 為 1 – 99。
+#include <stdio.h>
+int main()
+{
+	int N;
+	scanf("%d", &N);
+
+	int a[100];
+	for(int i=0; i<N; i++){
+		scanf("%d", &a[i] );
+	}
+
+
+	for(int i=N-1; i>=0; i--){
+		if(a[i]%2==1) printf("%d ", a[i] );
+	}
+}
+```
+
+
+## step03-2_會考刷題SOIT108進階題9b, 10, 11
+
+```cpp
+//(SOIT108_Advance_009B) 基礎題：大位王 :
+//題目內容：輸入一個整數，輸出該整數的最大位的數字。
+//例如：-357的最大位數字為3、1578的最大位數字為1，而0的最大位數字為0。
+//數字範圍：整數 9999 ~ -9999
+#include <stdio.h>
+int main()
+{
+	char c;
+
+	while( scanf("%c", &c)==1 ){
+		if(c>='0' && c<='9'){
+			printf("%c\n", c);
+			break;
+		}
+	}
+}
+```
+
+```cpp
+//(SOIT108_Advance_009B) 基礎題：大位王 :
+//題目內容：輸入一個整數，輸出該整數的最大位的數字。
+//例如：-357的最大位數字為3、1578的最大位數字為1，而0的最大位數字為0。
+//數字範圍：整數 9999 ~ -9999
+#include <stdio.h>
+int main()
+{
+	int n;
+	scanf("%d", &n);
+
+	if(n<0) n = -n;
+
+	while(n>10){
+		n = n/10;
+	}
+	printf("%d\n", n);
+}
+```
+
+
+```cpp
+//(SOIT108_Advance_010) 進階題：億萬富翁 :
+//題目內容：有一個富翁的財產超過一萬億，
+//所以常常搞不清楚財產到底有多少，現在輸入一個整數N表示富翁的財產總額，
+//請您幫他在財產總額上，從後方每三位加一個逗號，方便閱讀。
+//數字範圍：整數N範圍 為 1000000000000 – 999000000000000。
+#include <stdio.h>
+#include <string.h>
+int main()
+{
+	char line[200];
+	scanf("%s", line);
+	int N = strlen(line);
+
+	for(int i=0; i<N; i++){
+		printf("%c", line[i] );
+
+		if((N-1-i)%3==0 && (N-1-i)!=0 ) printf(",");
+	}
+}
+```
+
+
+```cpp
+//(SOIT108_Advance_011) 進階題：秒數換算 :
+//題目內容：輸入總秒數(介於0~80000 之間的整數)，
+//將其轉換成時:分:秒格式。數字範圍：秒數範圍0~80000
+
+#include <stdio.h>
+int main()
+{
+	int n;
+	scanf("%d", &n);
+
+	int ss = n%60;
+	int mm = n/60%60;
+	int hh = n/60/60;
+
+	printf("%02d:%02d:%02d", hh, mm, ss);
+}
+```
