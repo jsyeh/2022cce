@@ -3927,3 +3927,264 @@ int main()
 	printf("%02d:%02d:%02d", hh, mm, ss);
 }
 ```
+
+# Week17
+
+程式設計二 2023-06-06 Week17
+1. LeetCode學習計畫的故事
+2. LeetCode挑戰 1502等差級數 昨天1232點在直線上
+3. 互動程式設計 (愛心)
+4. 自製一些小遊戲
+
+## step01-1_LeetCode 每日挑戰題 1502 等差級數。先把陣列排序, 再用 for迴圈兩兩比較, diff 差距不同就 失敗。請在 LeetCode完成, 截圖上傳 week17-1.png (程式碼則是存成 week17-1.cpp 等下上傳 GitHub)
+
+```cpp
+///LeetCode 1502 等差級數, 不過一開始陣列裡的數字是亂的
+bool canMakeArithmeticProgression(int* arr, int arrSize){
+    //1 排序
+    //笨方法
+    for(int i=0; i<arrSize; i++){
+        for(int j=i+1; j<arrSize; j++){
+            if(arr[i] > arr[j]){
+                int temp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+    //2 逐一相減 a[i] - a[i-1] 都要相同 Yes
+    //   不相同, 直接就 No
+    int diff = arr[1] - arr[0];
+    for(int i = 1;  i<arrSize; i++){
+        if(arr[i] - arr[i-1] != diff) return false;
+    }
+    return true;
+}
+```
+
+```cpp
+///LeetCode 1502 等差級數, 不過一開始陣列裡的數字是亂的
+int comp(const void*p1, const void *p2){
+    return *(int*)p1 - *(int*)p2;
+}
+bool canMakeArithmeticProgression(int* arr, int arrSize){
+    //1 排序
+    qsort(arr, arrSize, sizeof(int), comp);
+
+    //2 逐一相減 a[i] - a[i-1] 都要相同 Yes
+    //   不相同, 直接就 No
+    int diff = arr[1] - arr[0];
+    for(int i = 1;  i<arrSize; i++){
+        if(arr[i] - arr[i-1] != diff) return false;
+    }
+    return true;
+}
+```
+
+```cpp
+///LeetCode 1502 等差級數, 不過一開始陣列裡的數字是亂的
+class Solution {
+public:
+    bool canMakeArithmeticProgression(vector<int>& arr) {
+        sort( arr.begin(), arr.end() );
+
+        int diff = arr[1] - arr[0];
+        for(int i = 1; i < arr.size() ; i++){
+            if( arr[i] - arr[i-1] != diff ) return false;
+        }
+        return true;
+    }
+};
+```
+
+## step01-2_LeetCode 昨天的挑戰題 1232 座標連成一條線。其實就是看每一個部分的斜率是否相同。先把 點1 - 點0的斜率準備好, 再看 點i - 點0的斜率 是否與前面準備的相同。不相同就失敗。不過呢, 斜線的除法,如果 diff x 是0 就會當機, 可以移項變號,讓除法變成對面的乘法。截圖上傳 week17-2.png (程式碼則是存成 week17-2.cpp 等下上傳 GitHub)
+
+```cpp
+//LeetCode 1232 全部的點是否在同一條線上
+class Solution {
+public:
+    bool checkStraightLine(vector<vector<int>>& coordinates) {
+        int x0 = coordinates[0][0], y0 = coordinates[0][1];
+        int x1 = coordinates[1][0], y1 = coordinates[1][1];
+
+        for(int i=2; i<coordinates.size(); i++){
+            int xi = coordinates[i][0], yi = coordinates[i][1];
+            //(y1-y0)/(x1-x0) == (yi-y0)/(xi-x0) 斜率要相等
+            //但擔心分母是0, 所以移項變號
+            //(y1-y0)*(xi-x0) == (yi-y0)*(x1-x0) 
+            if( (y1-y0)*(xi-x0) != (yi-y0)*(x1-x0) ) return false;
+        }
+        return true;
+    }
+};
+```
+
+## step02_互動程式設計, 最後要寫出愛心
+
+## week17_1_heart
+
+先看一下 week01 的那個愛心的程式碼, 是今天的小目標, 要把愛心畫出來, 同時可以蓋章互動, 畫出很多愛心
+
+```processing
+//week01 畫愛心的程式
+//File-Preference, Font:36
+size(400,400); //大小
+fill(255,0,0); //Red 填充顏色
+noStroke(); //不要畫外框
+//ellipse(50,50,100,100); //把實驗的圓刪掉
+for(int y=0; y<400; y++){
+  for(int x=0; x<400; x++){
+    float x2 = (x-200)/100.0; //0...400 => -2..+2
+    float y2 = (200-y)/100.0; //0...400 => +2..-2
+    float left = x2*x2 + y2*y2 - 1;
+    if(left*left*left - x2*x2 * y2*y2*y2 < 0){
+      ellipse(x,y,2,2);
+    }
+  }
+}
+```
+
+```processing
+//File-Preference, 字型 24 (放大一些)
+size(400,400);
+fill(255,0,0);
+ellipse(200,200,300,300);
+```
+
+## week17_2_heart
+
+```processing
+size(400, 400);
+fill(255, 0, 0);
+noStroke();
+
+for(int y=0; y<400; y++){
+  for(int x=0; x<400; x++){
+    ellipse(x, y, 2, 2);
+  }
+}
+```
+
+## week17_3_heart_ok
+
+```processing
+size(400, 400);
+fill(255, 0, 0);
+noStroke();
+
+for(int y=0; y<400; y++){
+  for(int x=0; x<400; x++){
+    float a = (x-200)/100.0;
+    float b = (200-y)/100.0;
+    float c = a*a + b*b - 1;
+    if(c*c*c - a*a*b*b*b < 0) ellipse(x, y, 2, 2);
+  }
+}
+```
+
+## week17_4_heart_setup_draw
+
+```processing
+void setup(){
+  size(400, 400);
+  fill(255, 0, 0);
+  noStroke();
+}
+void draw(){
+  
+}
+void mousePressed(){
+  for(int y=0; y<400; y++){
+    for(int x=0; x<400; x++){
+      float a = (x-200)/30.0;
+      float b = (200-y)/30.0;
+      float c = a*a + b*b - 1;
+      if(c*c*c - a*a*b*b*b < 0){
+        ellipse(x+mouseX-200, y+mouseY-200, 2, 2);
+      }
+    }
+  }
+}
+```
+
+## 接下來是想做出陳俊太老師的大轉輪, 勇於嘗試
+
+https://www.facebook.com/jiuntaichen/videos/10108133831488382
+
+## week17_5_wheel_arc
+
+```processing
+size(400,400);
+arc(200,200, 300,300, 0, radians(45), PIE);
+```
+
+
+## week17_6_wheel_for_24_fill
+
+
+```processing
+size(400,400);
+for(int i=0; i<24; i++){
+  float a = radians(360/24);
+  if(i==0) fill(#FF7E05); //橘,中獎
+  else if(i%3==0) fill(#000000);//黑
+  else if(i%3==1) fill(#FAE3A9);//淡黃
+  else fill(#FFFFFF);
+  arc(200,200, 300,300, a*i, a*(i+1), PIE);
+}
+```
+
+## week17_7_wheel_setup_draw_mouseDragged
+
+```processing
+void setup(){
+  size(400,400);
+}
+void draw(){
+  background(#FFFFF2);
+  for(int i=0; i<24; i++){
+    float a = radians(360/24);
+    if(i==0) fill(#FF7E05); //橘,中獎
+    else if(i%3==0) fill(#000000);//黑
+    else if(i%3==1) fill(#FAE3A9);//淡黃
+    else fill(#FFFFFF);
+    arc(200,200, 300,300, d + a*i, d + a*(i+1), PIE);
+  }
+}
+float d = 0;
+void mouseDragged(){
+  d = mouseX;
+}
+```
+
+## week17_8_wheel_lucky_mousePressed_mouseReleased_v
+
+
+```processing
+void setup(){
+  size(400,400);
+}
+void draw(){
+  background(#FFFFF2);
+  for(int i=0; i<24; i++){
+    float a = radians(360/24);
+    if(i==0) fill(#FF7E05); //橘,中獎
+    else if(i%3==0) fill(#000000);//黑
+    else if(i%3==1) fill(#FAE3A9);//淡黃
+    else fill(#FFFFFF);
+    arc(200,200, 300,300, d + a*i, d + a*(i+1), PIE);
+  }
+  d -= v;
+  v *= 0.9;
+}
+float d = 0, v = 0, oldX;
+void mousePressed(){
+  oldX = mouseX;//記得在哪裡按下去
+}
+void mouseDragged(){
+  d += radians(mouseX-pmouseX);
+}
+void mouseReleased(){ //放開時,要自己轉,有速度
+  v = radians(mouseX - oldX);
+}
+```

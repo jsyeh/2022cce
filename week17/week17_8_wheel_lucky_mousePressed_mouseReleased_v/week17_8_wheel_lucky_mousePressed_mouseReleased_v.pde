@@ -19,7 +19,7 @@ void mousePressed(){
   oldX = mouseX;//記得在哪裡按下去
 }
 void mouseDragged(){
-  d = radians(mouseX);
+  d += radians(mouseX-pmouseX);
 }
 void mouseReleased(){ //放開時,要自己轉,有速度
   v = radians(mouseX - oldX);
